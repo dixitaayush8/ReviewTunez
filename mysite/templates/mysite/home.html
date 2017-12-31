@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <p>hello</p>
+    <p>welcome {{ user.username }}</p>
+    <p><a href="/logout">Logout</a></p>
+    <p><a href="/search">Search for Music</a></p>
+    {% else %}
+    <p><a href="/login">Login</a></p>
+    <p><a href="/register">Register</a></p>
+    {% endif %}
+</body>
+</html>

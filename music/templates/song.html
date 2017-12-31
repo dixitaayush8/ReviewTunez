@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{song_pg.title}}</title>
+	<style>
+			img {
+				max-width:100%;
+			}
+		</style>
+	</head>
+	<body>
+		<img src="{{song_pg.image}}" width = 300/>
+		<h2>{{song_pg.title}}</h2>
+		<h2>{{song_pg.mainArtist}}</h2>
+		<h3>Artists: </h3>
+		<p>{{song_pg.artists}}</p>
+		<h3>Album: </h3>
+		<p>{{song_pg.album}}</p>
+		<h3>Popularity Score: </h3>
+		<p>{{song_pg.popularity}}/100</p>
+		<h3>Preview: </h3>
+		{% if song_pg.preview %}
+		<audio controls>
+			<source src="{{song_pg.preview}}.mp3" type="audio/mp3" autoplay="False">
+		</audio>
+		{% endif %}
+		<p><a href="{{song_pg.external}}" target="_blank">Open on Spotify browser</a></p>
+		<p><a href="{{song_pg.uri}}" target="_blank">Open on Spotify</a></p>
+
+	</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Search</title>
+
+</head>
+<body>
+	<form name="some" method = "GET" action="/search">
+		<p>Enter a song, album, or artist to search for below: </p>
+		<input class="form-control" type="text" name="q" value="{{ request.GET.q }}">
+		<input type="submit" value="Song" class="btn btn-primary" name = "r">
+		<input class="btn btn-primary" type="submit" value="Album" name="p">
+		<input class="btn btn-primary" type="submit" value="Artist" name="n">
+	{% if search == True %}
+	<p></p>
+	{% if 'r' in request.GET or 'j' in request.GET %}
+	<input class = "btn btn-primary" type="submit" value="Sort by Popularity" name="j">
+	{% endif %}
+	</form>
+	{% for m in musicData %}
+	{% if 'r' in request.GET or 'j' in request.GET %}
+	<img src="{{m.image}}" width=100/>
+	<h3><a href="/song/{{m.songId}}" name = "clicked">{{m.title}}</a></h3>
+	<p>{{m.mainArtist}}</p>
+	{% endif %}
+	{% endfor %}
+	{% endif %}
+</body>
+</html>
