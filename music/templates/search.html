@@ -21,7 +21,7 @@
 	{% if 'r' in request.GET or 'j' in request.GET %}
 	<img src="{{m.image}}" width=100/>
 	<h3><a href="/song/{{m.songId}}" name = "clicked">{{m.title}}</a></h3>
-	<p>{{m.mainArtist}}</p>
+	<p>{{m.artists}}</p>
 	{% endif %}
 	{% endfor %}
 	{% endif %}

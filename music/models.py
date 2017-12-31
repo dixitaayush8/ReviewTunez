@@ -54,6 +54,7 @@ class Review(models.Model):
 	songTitle = models.CharField(max_length=100, default='No song title', null=True, blank=True)
 	albumTitle = models.CharField(max_length=100, default='No album title', null=True, blank=True)
 	artistTitle = models.CharField(max_length=100, default='No artist title', null=True, blank=True)
+	songArtists = models.CharField(max_length=10, default='No artists', null=True, blank=True)
 	rating = models.FloatField(max_length=2, default=1)
 
 # Create your models here.

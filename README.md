@@ -5,3 +5,6 @@ Functional Requirements planned:
 2. User can access information about each album, song, or artist based on search.
 3. User can rate and enter a custom review for an album, song, or artist. 
 4. User can access suggested artists, albums, and songs for them based on what they reviewed. 
+
+Completed:
+1. User can search for a song by title or popularity index and access info, preview, and stream the song.
