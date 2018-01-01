@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{album_pg.title}}</title>
+	<style>
+			img {
+				max-width:100%;
+			}
+		</style>
+	</head>
+	<body>
+		<img src="{{album_pg.image}}" width = 300/>
+		<h2>{{album_pg.title}}</h2>
+		<h3>Artists: </h3>
+		<p>{{album_pg.artists}}</p>
+		<h3>Tracks: </h3>
+		<p>{{album_pg.tracks}}</p>
+		<!--<p>{{tracks|join:"<br/>"}}</p> -->
+		<p>In order to access the album on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> if you have not done so already.</p>
+		<p><a href="{{album_pg.external}}" target="_blank">Open on Spotify browser</a></p>
+		<p><a href="{{album_pg.uri}}" target="_blank">Open on Spotify</a></p>
+		<iframe src="https://open.spotify.com/embed?uri=spotify:album:{{album_pg.albumId}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+
+	</body>
+</html>

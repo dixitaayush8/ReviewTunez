@@ -23,6 +23,7 @@ class Song(models.Model):
 
 class Album(models.Model):
 	title = models.CharField(max_length=100, default='No album title')
+	query = models.CharField(max_length=100, default='No query')
 	image = models.CharField(max_length=200, default='No image')
 	albumId = models.CharField(max_length=100, primary_key=True)
 	external = models.CharField(max_length=100, default='No external URL')
