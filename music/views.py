@@ -50,13 +50,7 @@ def search(request):
 				thatList = [str(x) for x in t['available_markets']]
 				theMarkets = ', '.join(thatList)
 				artistId = t['artists'][0]['id']
-				#print theTitle
 				theImage = t['album']['images'][0]['url']
-				#for i in t['artists']:
-					#genres = [x for x in t['genres']]
-					#theGenres = ', '.join(genres)
-					#if not Artist.objects.filter(artistId=i['id']).exists():
-						#theArtist = Artist.objects.create(name=i['name'], query=searchname, artistId=i['id'],genres=theGenres,)
 				theSong = Song.objects.create(title=theTitle,theType=theType,query=searchname,albumId=albumId,album=theAlbum,songId=theId,preview=thePreview,external=theExternal,uri=theURI,duration=theDuration,mainArtist=theMainArtist,artists=theArtists,popularity=thePopularity,image=theImage,artistId=artistId)
 				musicData = Song.objects.filter(query=searchname)
 		if 'j' in request.GET:
@@ -132,9 +126,15 @@ def search(request):
 		return render(request, 'search.html')   
 
 def song_page(request, song_id):
+	theTrack = sp.track(song_id)
+	if Song.objects.filter(songId=song_id).exists():
+		song_pg = Song.objects.get(songId=song_id)
+	else:
+		theSong = Song.objects.create(title=theTrack['name'],theType=theTrack['type'],query='nothing',album=theTrack['album']['name'],songId=theTrack['id'],preview=theTrack['preview_url'],external=theTrack['external_urls']['spotify'],uri=theTrack['uri'],duration=convertMillis(theTrack['duration_ms']),mainArtist=theTrack['artists'][0]['name'],artists='nope',popularity=theTrack['popularity'],image=theTrack['album']['images'][0]['url'],artistId=theTrack['artists'][0]['id'])
+		song_pg = Song.objects.get(songId=song_id)
 	Artist.objects.all().delete()
 	track = sp.track(song_id)
-	song_pg = Song.objects.get(songId=song_id)
+	#song_pg = Song.objects.get(songId=song_id)
 	album = sp.album(track['album']['id'])
 	albumId= album['id']
 	for r in track['artists']:
@@ -160,6 +160,7 @@ def song_page(request, song_id):
 	return render_to_response('song.html',{'song_pg': song_pg, 'album_pg': album_pg, 'artist_pg': artistData})
 
 def album_page(request, album_id):
+	Song.objects.all().delete()
 	Artist.objects.all().delete()
 	album_pg = Album.objects.get(albumId=album_id)
 	j = sp.album_tracks(album_id, limit=50, offset=0)
@@ -194,8 +195,10 @@ def album_page(request, album_id):
 	return render_to_response('album.html',{'album_pg': album_pg, 'musicData': musicData, 'artist_pg': artistData})
 
 def artist_page(request, artist_id):
+	Song.objects.all().delete()
 	artist_pg = Artist.objects.get(artistId=artist_id)
-	top = sp.artist_top_tracks('spotify:artist:' + str(artist_id))
+	top = sp.artist_top_tracks(artist_id,country='US')
+	print len(top['tracks'])
 	for i in top['tracks'][:10]:
 		somelist = [x['name'] for x in i['artists']]
 		theArtists = ', '.join(somelist)
