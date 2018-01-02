@@ -198,15 +198,18 @@ def artist_page(request, artist_id):
 	Song.objects.all().delete()
 	artist_pg = Artist.objects.get(artistId=artist_id)
 	top = sp.artist_top_tracks(artist_id,country='US')
-	print len(top['tracks'])
-	for i in top['tracks'][:10]:
-		somelist = [x['name'] for x in i['artists']]
-		theArtists = ', '.join(somelist)
-		if Song.objects.filter(songId=i['id']).exists():
-			songData = Song.objects.filter(artistId=artist_id)
-		else:
-			theSong = Song.objects.create(title=i['name'],theType=i['type'],albumId=i['album']['id'],query='nah',album=i['album']['name'],songId=i['id'],preview=i['preview_url'],external=i['external_urls']['spotify'],uri=i['uri'],duration=convertMillis(i['duration_ms']),mainArtist=i['artists'][0]['name'],artists=theArtists,popularity=i['popularity'],image=i['album']['images'][0]['url'],artistId=artist_id)
-			songData = Song.objects.filter(artistId=artist_id)
+	if not top['tracks']:
+		songData = 'nothin'
+	else:
+		print len(top['tracks'])
+		for i in top['tracks'][:10]:
+			somelist = [x['name'] for x in i['artists']]
+			theArtists = ', '.join(somelist)
+			if Song.objects.filter(songId=i['id']).exists():
+				songData = Song.objects.filter(artistId=artist_id)
+			else:
+				theSong = Song.objects.create(title=i['name'],theType=i['type'],albumId=i['album']['id'],query='nah',album=i['album']['name'],songId=i['id'],preview=i['preview_url'],external=i['external_urls']['spotify'],uri=i['uri'],duration=convertMillis(i['duration_ms']),mainArtist=i['artists'][0]['name'],artists=theArtists,popularity=i['popularity'],image=i['album']['images'][0]['url'],artistId=artist_id)
+				songData = Song.objects.filter(artistId=artist_id)
 	return render_to_response('artist.html', {'artist_pg': artist_pg, 'songData': songData})
 
 
