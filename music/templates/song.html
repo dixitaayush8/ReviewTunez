@@ -11,12 +11,13 @@
 	<body>
 		<img src="{{song_pg.image}}" width = 300/>
 		<h2>{{song_pg.title}}</h2>
+		<p>{{song_pg.theType}}</p>
 		<h3>Artists: </h3>
 		<p>{{song_pg.artists}}</p>
 		<h3>Album: </h3>
-		<p>{{song_pg.album}}</p>
+		<p><a href="/album/{{album_pg.albumId}}">{{album_pg.title}}</a></p>
 		<h3>Popularity Score: </h3>
-		<p>{{song_pg.popularity}}/100</p>
+		<p>{{song_pg.popularity}}/100.0</p>
 		{% if song_pg.preview %}
 		<h3>Preview: </h3>
 		<audio controls>

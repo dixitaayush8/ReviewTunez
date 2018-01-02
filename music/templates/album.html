@@ -11,10 +11,17 @@
 	<body>
 		<img src="{{album_pg.image}}" width = 300/>
 		<h2>{{album_pg.title}}</h2>
+		<p>{{album_pg.theType}}</p>
 		<h3>Artists: </h3>
 		<p>{{album_pg.artists}}</p>
+		<h3>Release Date: </h3>
+		<p>{{album_pg.releaseDate}}</p>
 		<h3>Tracks: </h3>
-		<p>{{album_pg.tracks}}</p>
+		{% for m in musicData %}
+		<p><a href="/song/{{m.songId}}">{{m.title}}</a></p>
+		{% endfor %}
+		<h3>Popularity: </h3>
+		<p>{{album_pg.popularity}}/100.0</p>
 		<!--<p>{{tracks|join:"<br/>"}}</p> -->
 		<p>In order to access the album on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> if you have not done so already.</p>
 		<p><a href="{{album_pg.external}}" target="_blank">Open on Spotify browser</a></p>

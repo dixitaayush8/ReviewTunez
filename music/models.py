@@ -16,9 +16,10 @@ class Song(models.Model):
 	duration = models.CharField(max_length=10, default='No duration')
 	mainArtist = models.CharField(max_length=20, default='No artist')
 	artists = models.CharField(max_length=20, default='No artists')
-	popularity = models.CharField(max_length=3, default="0")
-	markets = models.CharField(max_length=100, default='No available markets')
+	popularity = models.FloatField(max_length=101, default=0)
 	image = models.CharField(max_length=100, default='None', null=True, blank=True)
+	theType = models.CharField(max_length = 10, default='No type')
+	albumId = models.CharField(max_length=100, default='None')
 	#recommendations, use API docs
 
 class Album(models.Model):
@@ -30,8 +31,10 @@ class Album(models.Model):
 	uri = models.CharField(max_length=100, default='No URI')
 	mainArtist = models.CharField(max_length=20, default='No artist')
 	artists = models.CharField(max_length=20, default='No artists')
-	markets = models.CharField(max_length=100, default='No available markets')
-	tracks = models.CharField(max_length = 1000, default='No tracks') #access API docs to get list of tracks
+	releaseDate = models.CharField(max_length=20, default='No release date', null=True, blank=True)
+	popularity = models.FloatField(max_length=101, default=0)
+	theType = models.CharField(max_length = 10, default='No type')
+	#access API docs to get list of tracks
 
 class Artist(models.Model):
 	genres = models.CharField(max_length=100, default='No genres')
