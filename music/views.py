@@ -107,15 +107,9 @@ def song_page(request, song_id):
 	track = sp.track(song_id)
 	song_pg = Song.objects.get(songId=song_id)
 	album = sp.album(track['album']['id'])
-	print album.keys()
 	albumId= album['id']
 	somelist = [x['name'] for x in album['artists']]
 	theArtists = ', '.join(somelist)
-	print album['name']
-	print album['images'][0]['url']
-	print album['id']
-	print album['external_urls']['spotify']
-	print album['uri']
 	if Album.objects.filter(albumId=albumId).exists():
 		album_pg=Album.objects.get(albumId=albumId)
 	else:
@@ -133,10 +127,10 @@ def album_page(request, album_id):
 		track = sp.track(r['id'])
 		popularity = track['popularity']
 		image = track['album']['images'][0]['url']
-		somelist = [r['name'] for x in r['artists']]
+		somelist = [x['name'] for x in track['artists']]
+		print somelist
 		theArtists = ', '.join(somelist)
 		if Song.objects.filter(songId=r['id']).exists():
-			print 'hi'
 			musicData = Song.objects.filter(albumId=album_id)
 		else:
 			theSong = Song.objects.create(title=r['name'],theType=r['type'],albumId=album_id,query='nothin',album=albumName,songId=r['id'],preview=r['preview_url'],external=r['external_urls']['spotify'],uri=r['uri'],duration=convertMillis(r['duration_ms']),mainArtist=r['artists'][0]['name'],artists=theArtists,popularity=popularity,image=image)
