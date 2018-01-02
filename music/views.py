@@ -162,7 +162,15 @@ def song_page(request, song_id):
 def album_page(request, album_id):
 	Song.objects.all().delete()
 	Artist.objects.all().delete()
-	album_pg = Album.objects.get(albumId=album_id)
+	if Album.objects.filter(albumId=album_id).exists():
+		album_pg=Album.objects.get(albumId=album_id)
+	else:
+		album = sp.album(album_id)
+		somelist = [x['name'] for x in album['artists']]
+		theArtists = ', '.join(somelist)
+		theAlbum = Album.objects.create(title=album['name'],theType=album['album_type'],popularity=float(album['popularity']),releaseDate=album['release_date'],query='nothin',image=album['images'][0]['url'],albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theArtists)
+		album_pg=Album.objects.get(albumId=album_id)
+	#album_pg = Album.objects.get(albumId=album_id)
 	j = sp.album_tracks(album_id, limit=50, offset=0)
 	album = sp.album(album_id)
 	albumName = album['name']
@@ -196,7 +204,19 @@ def album_page(request, album_id):
 
 def artist_page(request, artist_id):
 	Song.objects.all().delete()
-	artist_pg = Artist.objects.get(artistId=artist_id)
+	if Artist.objects.filter(artistId=artist_id).exists():
+		artist_pg = Artist.objects.get(artistId = artist_id)
+	else:
+		ta = sp.artist(artist_id)
+		genres = [x for x in ta['genres']]
+		theGenres = ', '.join(genres)
+		if not ta['images']:
+			image = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+		else:
+			image = ta['images'][0]['url']
+		artistData = Artist.objects.create(name=ta['name'],query='nothin',artistId=ta['id'],genres=theGenres,external=ta['external_urls']['spotify'],uri=ta['uri'],image=image,popularity=ta['popularity'],numOfFollowers=ta['followers'],songId="None",albumId="none")
+		artist_pg = Artist.objects.get(artistId=artist_id)
+	#artist_pg = Artist.objects.get(artistId=artist_id)
 	top = sp.artist_top_tracks(artist_id,country='US')
 	if not top['tracks']:
 		songData = 'nothin'
