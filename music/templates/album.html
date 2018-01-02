@@ -13,7 +13,9 @@
 		<h2>{{album_pg.title}}</h2>
 		<p>{{album_pg.theType}}</p>
 		<h3>Artists: </h3>
-		<p>{{album_pg.artists}}</p>
+		{% for d in artist_pg %}
+		<p><a href="/artist/{{d.artistId}}">{{d.name}}{% if not forloop.last %},{% endif %}</a></p>
+		{% endfor %}
 		<h3>Release Date: </h3>
 		<p>{{album_pg.releaseDate}}</p>
 		<h3>Tracks: </h3>

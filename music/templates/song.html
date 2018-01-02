@@ -13,7 +13,9 @@
 		<h2>{{song_pg.title}}</h2>
 		<p>{{song_pg.theType}}</p>
 		<h3>Artists: </h3>
-		<p>{{song_pg.artists}}</p>
+		{% for g in artist_pg %}
+		<p><a href="/artist/{{g.artistId}}">{{g.name}}</a></p>
+		{% endfor %}
 		<h3>Album: </h3>
 		<p><a href="/album/{{album_pg.albumId}}">{{album_pg.title}}</a></p>
 		<h3>Popularity Score: </h3>

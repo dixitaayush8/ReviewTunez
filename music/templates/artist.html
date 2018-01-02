@@ -17,6 +17,10 @@
 		{% endif %}
 		<h3>Popularity: </h3>
 		<p>{{artist_pg.popularity}}/100.0</p>
+		<h3>Top songs: </h3>
+		{% for m in songData %}
+		<p><a href="/song/{{m.songId}}">{{m.title}}</a></p>
+		{% endfor %}
 		<!--<p>{{tracks|join:"<br/>"}}</p> -->
 		<p>In order to access this artist on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> if you have not done so already.</p>
 		<p><a href="{{artist_pg.external}}" target="_blank">Open on Spotify browser</a></p>

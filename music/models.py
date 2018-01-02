@@ -20,6 +20,7 @@ class Song(models.Model):
 	image = models.CharField(max_length=100, default='None', null=True, blank=True)
 	theType = models.CharField(max_length = 10, default='No type')
 	albumId = models.CharField(max_length=100, default='None')
+	artistId = models.CharField(max_length=100, default='None')
 	#recommendations, use API docs
 
 class Album(models.Model):
@@ -46,6 +47,9 @@ class Artist(models.Model):
 	image = models.CharField(max_length=100, default='No image')
 	popularity = models.FloatField(max_length=101, default=0)
 	numOfFollowers = models.CharField(max_length=20,default="0")
+	songId = models.CharField(max_length=30, default="None", null=True, blank=True)
+	albumId = models.CharField(max_length = 30, default="None", null=True, blank=True)
+	#tracks = models.ManyToManyField(Song)
 	#topTenTracks = models.CharField(max_length=1000, default="No top tracks") #access API docs to generate
 	#albums = models.CharField(max_length=1000, default="No albums") #access API docs to generate
 	#related artists, use API docs
