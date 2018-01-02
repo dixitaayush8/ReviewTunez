@@ -26,6 +26,9 @@
 	<img src="{{m.image}}" width=100/>
 	<h3><a href="/album/{{m.albumId}}" name = "clicked">{{m.title}}</a></h3>
 	<p>{{m.artists}}</p>
+	{% elif 'n' in request.GET %}
+	<img src="{{m.image}}" width=100/>
+	<h3><a href="/artist/{{m.artistId}}" name = "clicked">{{m.name}}</a></h3>
 	{% endif %}
 	{% endfor %}
 	{% endif %}

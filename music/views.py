@@ -99,6 +99,27 @@ def search(request):
 				theMarkets = ', '.join(thatList)
 				theAlbum = Album.objects.create(title=theTitle,theType=theType,popularity=popularity,releaseDate=releaseDate,query=searchname,image=theImage,albumId=theId,external=theExternal,uri=theURI,mainArtist=theMainArtist,artists=theArtists)
 				musicData = Album.objects.filter(query=searchname)
+		if 'n' in request.GET:
+			Song.objects.all().delete()
+			Album.objects.all().delete()
+			Artist.objects.all().delete()
+			results = sp.search(q=searchname, limit=50, type='artist')
+			for i,t in enumerate(results['artists']['items']):
+				name = t['name']
+				artistId = t['id']
+				genres = [x for x in t['genres']]
+				theGenres = ', '.join(genres)
+				external = t['external_urls']['spotify']
+				uri = t['uri']
+				if not t['images']:
+					image = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+				else:
+					image = t['images'][0]['url']
+				#image = t['images'][0]['url']
+				popularity = float(t['popularity'])
+				numOfFollowers = t['followers']
+				theArtist = Artist.objects.create(name=name,query=searchname,artistId=artistId,genres=theGenres,external=external,uri=uri,image=image,popularity=popularity,numOfFollowers=numOfFollowers)
+				musicData = Artist.objects.filter(query=searchname)
 		return render(request, 'search.html',{'musicData': musicData, 'search': True})
 	else:
 		return render(request, 'search.html')   
@@ -136,6 +157,10 @@ def album_page(request, album_id):
 			theSong = Song.objects.create(title=r['name'],theType=r['type'],albumId=album_id,query='nothin',album=albumName,songId=r['id'],preview=r['preview_url'],external=r['external_urls']['spotify'],uri=r['uri'],duration=convertMillis(r['duration_ms']),mainArtist=r['artists'][0]['name'],artists=theArtists,popularity=popularity,image=image)
 			musicData = Song.objects.filter(albumId=album_id)
 	return render_to_response('album.html',{'album_pg': album_pg, 'musicData': musicData})
+
+def artist_page(request, artist_id):
+	artist_pg = Artist.objects.get(artistId=artist_id)
+	return render_to_response('artist.html', {'artist_pg': artist_pg})
 
 
 

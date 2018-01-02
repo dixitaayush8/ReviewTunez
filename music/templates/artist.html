@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{artist_pg.name}}</title>
+	<style>
+			img {
+				max-width:100%;
+			}
+		</style>
+	</head>
+	<body>
+		<img src="{{artist_pg.image}}" width = 300/>
+		<h2>{{artist_pg.name}}</h2>
+		{% if artist_pg.genres %}
+		<h3>Genres: </h3>
+		<p>{{artist_pg.genres}}</p>
+		{% endif %}
+		<h3>Popularity: </h3>
+		<p>{{artist_pg.popularity}}/100.0</p>
+		<!--<p>{{tracks|join:"<br/>"}}</p> -->
+		<p>In order to access this artist on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> if you have not done so already.</p>
+		<p><a href="{{artist_pg.external}}" target="_blank">Open on Spotify browser</a></p>
+		<p><a href="{{artist_pg.uri}}" target="_blank">Open on Spotify</a></p>
+		<iframe src="https://open.spotify.com/embed?uri={{artist_pg.uri}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+
+	</body>
+</html>

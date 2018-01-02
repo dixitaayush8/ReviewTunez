@@ -38,15 +38,16 @@ class Album(models.Model):
 
 class Artist(models.Model):
 	genres = models.CharField(max_length=100, default='No genres')
+	query = models.CharField(max_length=100, default='No query')
 	name = models.CharField(max_length=100, default='No name')
 	artistId = models.CharField(max_length=100, primary_key=True)
 	external = models.CharField(max_length=100, default='No external URL')
 	uri = models.CharField(max_length=100, default='No URI')
 	image = models.CharField(max_length=100, default='No image')
-	popularity = models.CharField(max_length=3, default="0")
+	popularity = models.FloatField(max_length=101, default=0)
 	numOfFollowers = models.CharField(max_length=20,default="0")
-	topTenTracks = models.CharField(max_length=1000, default="No top tracks") #access API docs to generate
-	albums = models.CharField(max_length=1000, default="No albums") #access API docs to generate
+	#topTenTracks = models.CharField(max_length=1000, default="No top tracks") #access API docs to generate
+	#albums = models.CharField(max_length=1000, default="No albums") #access API docs to generate
 	#related artists, use API docs
 
 class Review(models.Model):
