@@ -299,9 +299,9 @@ def artist_page(request, artist_id):
 
 def list_reviews(request):
 	theUser = request.user
-	songReview_pg = SongReview.objects.filter(user=theUser)
-	albumReview_pg = AlbumReview.objects.filter(user=theUser)
-	artistReview_pg = ArtistReview.objects.filter(user=theUser)
+	songReview_pg = SongReview.objects.filter(user=theUser).order_by('-time')
+	albumReview_pg = AlbumReview.objects.filter(user=theUser).order_by('-time')
+	artistReview_pg = ArtistReview.objects.filter(user=theUser).order_by('-time')
 	if not songReview_pg:
 		songReview_pg = 'nope'
 	if not albumReview_pg:
