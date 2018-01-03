@@ -20,6 +20,7 @@
 		<p>{{artist_pg.popularity}}/100.0</p>
 		{% if albumData != 'nothin' %}
 		<h3>Albums: </h3>
+		<p>(If there are duplicate titles of an album, one is an explicit version and the other is a clean version.)</p>
 		{% for r in albumData %}
 		<p><a href="/album/{{r.albumId}}">{{r.title}}</a></p>
 		{% endfor %}
@@ -31,7 +32,6 @@
 		{% endfor %}
 		<iframe src="https://open.spotify.com/embed?uri={{artist_pg.uri}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 		{% endif %}
-		<!--<p>{{tracks|join:"<br/>"}}</p> -->
 		<p>In order to access this artist on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> if you have not done so already.</p>
 		<p><a href="{{artist_pg.external}}" target="_blank">Open on Spotify browser</a></p>
 		<p><a href="{{artist_pg.uri}}" target="_blank">Open on Spotify</a></p>
@@ -55,8 +55,9 @@
 							{% for g in allReviews %}
 							<p>{{g.time}} (UTC)</p>
 							<p>{{g.user}}: {{g.comment}}</p>
-							<p>Rating: {{g.rating}}</p>
+							<p>Rating: {{g.rating}}/10.0</p>
 							{% endfor %}
 							{% endif %}
+							<p><a href="/list_reviews/">My Reviews</a></p>
 	</body>
 </html>

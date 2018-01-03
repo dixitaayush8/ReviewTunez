@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Reviews</title>
+</head>
+<body>
+	<p><a href="/">Home</a></p>
+	<h2>Song Reviews</h2>
+	{% if songReview_pg == 'nope' %}
+	<p>No song reviews yet.</p>
+	{% else %}
+	{% for m in songReview_pg %}
+	<img src="{{m.image}}" width=100/>
+	<h3><a href="/song/{{m.songId}}">{{m.songTitle}}</a></h3>
+	<p>Artists: {{m.songArtists}}</p>
+	<p>Review: {{m.comment}}</p>
+	<p>Rating: {{m.rating}}/10.0</p>
+	{% endfor %}
+	{% endif %}
+	<h2>Album Reviews</h2>
+	{% if albumReview_pg == 'nope' %}
+	<p>No album reviews yet.</p>
+	{% else %}
+	{% for a in albumReview_pg %}
+	<img src="{{a.image}}" width=100/>
+	<h3><a href="/album/{{a.albumId}}">{{a.albumTitle}}</a></h3>
+	<p>Artists: {{a.albumArtists}}</p>
+	<p>Review: {{a.comment}}</p>
+	<p>Rating: {{a.rating}}/10.0</p>
+	{% endfor %}
+	{% endif %}
+	<h2>Artist Reviews</h2>
+	{% if artistReview_pg == 'nope' %}
+	<p>No artist reviews yet.</p>
+	{% else %}
+	{% for al in artistReview_pg %}
+	<img src="{{al.image}}" width=100/>
+	<h3><a href="/artist/{{al.artistId}}">{{al.artistName}}</a></h3>
+	<p>Review: {{al.comment}}</p>
+	<p>Rating: {{al.rating}}/10.0</p>
+	{% endfor %}
+	{% endif %}
+	</body>
+</html>

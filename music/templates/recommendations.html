@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Song Recommendations</title>
+</head>
+<body>
+	<p><a href="/">Home</a></p>
+	<h3>Song Recommendations</h3>
+	{% if theRecommendedSongs == 'nonexistent' %}
+	<p>No recommendations</p>
+	{% else %}
+	{% for i, t in theRecommendedSongs.items %}
+	<p><a href="/song/{{i}}">{{t}}</a></p>
+	{% endfor %}
+	{% endif %}
+	</body>
+	
+</html>

@@ -50,8 +50,9 @@
 							{% for g in allReviews %}
 							<p>{{g.time}} (UTC)</p>
 							<p>{{g.user}}: {{g.comment}}</p>
-							<p>Rating: {{g.rating}}</p>
+							<p>Rating: {{g.rating}}/10.0</p>
 							{% endfor %}
 							{% endif %}
+							<p><a href="/list_reviews/">My Reviews</a></p>
 	</body>
 </html>

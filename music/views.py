@@ -51,7 +51,10 @@ def search(request):
 				thatList = [str(x) for x in t['available_markets']]
 				theMarkets = ', '.join(thatList)
 				artistId = t['artists'][0]['id']
-				theImage = t['album']['images'][0]['url']
+				if not t['album']['images']:
+					theImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+				else:
+					theImage = t['album']['images'][0]['url']
 				theSong = Song.objects.create(title=theTitle,theType=theType,query=searchname,albumId=albumId,album=theAlbum,songId=theId,preview=thePreview,external=theExternal,uri=theURI,duration=theDuration,mainArtist=theMainArtist,artists=theArtists,popularity=thePopularity,image=theImage,artistId=artistId)
 				musicData = Song.objects.filter(query=searchname)
 		if 'j' in request.GET:
@@ -74,7 +77,10 @@ def search(request):
 				thePopularity = t['popularity']
 				thatList = [str(x) for x in t['available_markets']]
 				theMarkets = ', '.join(thatList)
-				theImage = t['album']['images'][0]['url']
+				if not t['album']['images']:
+					theImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+				else:
+					theImage = t['album']['images'][0]['url']
 				artistId = t['artists'][0]['id']
 				theSong = Song.objects.create(title=theTitle,theType=theType,query=searchname,album=theAlbum,songId=theId,preview=thePreview,external=theExternal,uri=theURI,duration=theDuration,mainArtist=theMainArtist,artists=theArtists,popularity=thePopularity,image=theImage,artistId=artistId)
 				musicData = Song.objects.filter(query=searchname).order_by('-popularity')
@@ -85,7 +91,11 @@ def search(request):
 			results = sp.search(q=searchname, limit=50, type='album')
 			for i,t in enumerate(results['albums']['items']):
 				theTitle = t['name']
-				theImage = t['images'][0]['url']
+				print t['name']
+				if not t['images']:
+					theImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+				else:
+					theImage = t['images'][0]['url']
 				theId = t['id']
 				someting = sp.album(theId)
 				releaseDate = someting['release_date']
@@ -167,7 +177,7 @@ def song_page(request, song_id):
 		theRating = request.GET.get('number')
 		if 'reviewed' in request.GET:
 			showtime = strftime("%Y-%m-%d %H:%M:%S", localtime())
-			theReview = SongReview.objects.create(songId=song_id, time=showtime, songTitle=theTrack['name'],songArtists=songArtists,user=theUser,comment=theComment,rating=theRating)
+			theReview = SongReview.objects.create(songId=song_id, image=theTrack['album']['images'][0]['url'],time=showtime, songTitle=theTrack['name'],songArtists=songArtists,user=theUser,comment=theComment,rating=theRating)
 			allReviews = SongReview.objects.filter(songId=song_id)
 			average = allReviews.aggregate(Avg('rating'))
 			return render_to_response('song.html',{'song_pg': song_pg, 'theUser': theUser, 'average': average, "allReviews": allReviews, 'album_pg': album_pg, 'artist_pg': artistData})
@@ -221,12 +231,13 @@ def album_page(request, album_id):
 		theRating = request.GET.get('number')
 		if 'reviewed' in request.GET:
 			showtime = strftime("%Y-%m-%d %H:%M:%S", localtime())
-			theReview = AlbumReview.objects.create(albumId=album_id,time=showtime,albumTitle=album['name'],albumArtists=theArtists,user=theUser,comment=theComment,rating=theRating)
+			theReview = AlbumReview.objects.create(albumId=album_id,image=album['images'][0]['url'],time=showtime,albumTitle=album['name'],albumArtists=theArtists,user=theUser,comment=theComment,rating=theRating)
 			allReviews = AlbumReview.objects.filter(albumId=album_id)
 			average = allReviews.aggregate(Avg('rating'))
 			return render_to_response('album.html',{'album_pg': album_pg, 'theUser': theUser, 'average': average, 'allReviews': allReviews, 'musicData': musicData, 'artist_pg': artistData})
 	else:
 		return render_to_response('album.html',{'album_pg': album_pg, 'theUser': theUser, 'average': average, 'allReviews': allReviews, 'musicData': musicData, 'artist_pg': artistData})
+
 
 def artist_page(request, artist_id):
 	Song.objects.all().delete()
@@ -235,15 +246,15 @@ def artist_page(request, artist_id):
 	ta = sp.artist(artist_id)
 	allReviews = ArtistReview.objects.filter(artistId=artist_id)
 	average = allReviews.aggregate(Avg('rating'))
+	if not ta['images']:
+		image = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+	else:
+		image = ta['images'][0]['url']
 	if Artist.objects.filter(artistId=artist_id).exists():
 		artist_pg = Artist.objects.get(artistId = artist_id)
 	else:
 		genres = [x for x in ta['genres']]
 		theGenres = ', '.join(genres)
-		if not ta['images']:
-			image = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
-		else:
-			image = ta['images'][0]['url']
 		artistData = Artist.objects.create(name=ta['name'],query='nothin',artistId=ta['id'],genres=theGenres,external=ta['external_urls']['spotify'],uri=ta['uri'],image=image,popularity=ta['popularity'],numOfFollowers=ta['followers'],songId="None",albumId="none")
 		artist_pg = Artist.objects.get(artistId=artist_id)
 	top = sp.artist_top_tracks(artist_id,country='US')
@@ -279,10 +290,49 @@ def artist_page(request, artist_id):
 		theRating = request.GET.get('number')
 		if 'reviewed' in request.GET:
 			showtime = strftime("%Y-%m-%d %H:%M:%S", localtime())
-			theReview = ArtistReview.objects.create(artistId=artist_id,user=theUser,comment=theComment,rating=theRating,artistName=ta['name'],time=showtime)
+			theReview = ArtistReview.objects.create(artistId=artist_id,image=image,user=theUser,comment=theComment,rating=theRating,artistName=ta['name'],time=showtime)
 			allReviews = ArtistReview.objects.filter(artistId=artist_id)
 			average = allReviews.aggregate(Avg('rating'))
 			return render_to_response('artist.html', {'artist_pg': artist_pg, 'average': average, 'theUser': theUser, 'allReviews': allReviews, 'songData': songData, 'albumData': albumData})
 	else:
 		return render_to_response('artist.html', {'artist_pg': artist_pg, 'average': average, 'theUser': theUser, 'allReviews': allReviews, 'songData': songData, 'albumData': albumData})
-	
+
+def list_reviews(request):
+	theUser = request.user
+	songReview_pg = SongReview.objects.filter(user=theUser)
+	albumReview_pg = AlbumReview.objects.filter(user=theUser)
+	artistReview_pg = ArtistReview.objects.filter(user=theUser)
+	if not songReview_pg:
+		songReview_pg = 'nope'
+	if not albumReview_pg:
+		albumReview_pg = 'nope'
+	if not artistReview_pg:
+		artistReview_pg = 'nope'
+	return render_to_response('list_reviews.html',{'songReview_pg': songReview_pg, 'albumReview_pg': albumReview_pg, 'artistReview_pg': artistReview_pg})
+
+def recommendations(request):
+	theRecommendedSongs = {}
+	songs = []
+	idList = []
+	theUser = request.user
+	songReviews = SongReview.objects.filter(user=theUser)
+	if not songReviews:
+		theRecommendedSongs = 'nonexistent'
+	for r in songReviews:
+		if r.rating > 6:
+			songs.append(r.songId)
+	if not songs:
+		theRecommendedSongs = 'nonexistent'
+	else:
+		recommendedSongs = sp.recommendations(seed_artists=None,seed_genres=None,seed_tracks=songs,limit=30,country=None)
+		for i in recommendedSongs['tracks']:
+			idList.append(i['id'])
+		for y in songReviews:
+			if y.songId in idList:
+				idList.remove(y.songId)
+		recSongs = list(set(idList))
+		for n in recSongs:
+			theTrack = sp.track(n)
+			theRecommendedSongs[n] = theTrack['name']
+	return render_to_response('recommendations.html',{'theRecommendedSongs': theRecommendedSongs})
+

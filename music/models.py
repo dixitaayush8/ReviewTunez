@@ -67,6 +67,7 @@ class SongReview(models.Model):
 	songArtists = models.CharField(max_length=10, default='No artists', null=True, blank=True)
 	rating = models.FloatField(max_length=2, default=1)
 	time = models.CharField(max_length=15, default='No date')
+	image = models.CharField(max_length=100, default='No image')
 
 class AlbumReview(models.Model):
 	albumId = models.CharField(max_length=10, default='No album', null=True, blank=True)
@@ -76,6 +77,7 @@ class AlbumReview(models.Model):
 	albumArtists = models.CharField(max_length=10,default='No artists',null=True,blank=True)
 	rating = models.FloatField(max_length = 2, default=1)
 	time = models.CharField(max_length=15, default='No date')
+	image = models.CharField(max_length=100, default='No image')
 
 class ArtistReview(models.Model):
 	artistId = models.CharField(max_length=10, default='No artist', null=True, blank=True)
@@ -84,4 +86,5 @@ class ArtistReview(models.Model):
 	artistName = models.CharField(max_length=10,default='No artist',null=True,blank=True)
 	rating = models.FloatField(max_length = 2, default=1)
 	time = models.CharField(max_length=15, default='No date')
+	image = models.CharField(max_length=100, default='No image')
 # Create your models here.
