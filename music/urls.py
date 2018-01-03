@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from music import views
-from .views import search, song_page, album_page, artist_page, list_reviews, recommendations
+from .views import search, song_page, album_page, artist_page, list_reviews, recommendations, new_releases
 from .models import Song
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
 	url(r'^artist/(?P<artist_id>\w+)/$',artist_page),
 	url(r'^list_reviews/', list_reviews),
 	url(r'^recommendations/', recommendations),
+	url(r'^new_releases/', new_releases),
 ]

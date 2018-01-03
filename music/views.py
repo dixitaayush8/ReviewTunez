@@ -311,6 +311,7 @@ def list_reviews(request):
 	return render_to_response('list_reviews.html',{'songReview_pg': songReview_pg, 'albumReview_pg': albumReview_pg, 'artistReview_pg': artistReview_pg})
 
 def recommendations(request):
+	Song.objects.all().delete()
 	theRecommendedSongs = {}
 	songs = []
 	idList = []
@@ -324,7 +325,7 @@ def recommendations(request):
 	if not songs:
 		theRecommendedSongs = 'nonexistent'
 	else:
-		recommendedSongs = sp.recommendations(seed_artists=None,seed_genres=None,seed_tracks=songs,limit=30,country=None)
+		recommendedSongs = sp.recommendations(seed_artists=None,seed_genres=None,seed_tracks=songs,limit=30,country='US')
 		for i in recommendedSongs['tracks']:
 			idList.append(i['id'])
 		for y in songReviews:
@@ -333,6 +334,30 @@ def recommendations(request):
 		recSongs = list(set(idList))
 		for n in recSongs:
 			theTrack = sp.track(n)
-			theRecommendedSongs[n] = theTrack['name']
+			songArtistLists = [x['name'] for x in theTrack['artists']]
+			songArtists = ", ".join(songArtistLists)
+			if not theTrack['album']['images']:
+				theImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+			else:
+				theImage = theTrack['album']['images'][0]['url']
+			theSong = Song.objects.create(title=theTrack['name'],theType=theTrack['type'],albumId=theTrack['album']['id'],query='recs',album=theTrack['album']['name'],songId=theTrack['id'],preview=theTrack['preview_url'],external=theTrack['external_urls']['spotify'],uri=theTrack['uri'],duration=convertMillis(theTrack['duration_ms']),mainArtist=theTrack['artists'][0]['name'],artists=songArtists,popularity=theTrack['popularity'],image=theImage,artistId=theTrack['artists'][0]['id'])
+			theRecommendedSongs = Song.objects.filter(query='recs')
 	return render_to_response('recommendations.html',{'theRecommendedSongs': theRecommendedSongs})
+
+def new_releases(request):
+	Album.objects.all().delete()
+	theNewStuff = sp.new_releases(country='US',limit=40)
+	for i in theNewStuff['albums']['items']:
+		theAlbum = sp.album(i['id'])
+		albumArtistList = [x['name'] for x in theAlbum['artists']]
+		albumArtists = ", ".join(albumArtistList)
+		if not theAlbum['images']:
+			theImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+		else:
+			theImage = theAlbum['images'][0]['url']
+		theAlbum = Album.objects.create(title=theAlbum['name'],theType=theAlbum['album_type'],popularity=float(theAlbum['popularity']),releaseDate=theAlbum['release_date'],query='reca',image=theAlbum['images'][0]['url'],albumId=theAlbum['id'],external=theAlbum['external_urls']['spotify'],uri=theAlbum['uri'],mainArtist=theAlbum['artists'][0]['name'],artists=albumArtists,artistId='nah')
+		newAlbums = Album.objects.filter(query='reca')
+	return render_to_response('new_releases.html',{'newAlbums': newAlbums})
+
+
 

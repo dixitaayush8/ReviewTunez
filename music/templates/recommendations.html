@@ -9,8 +9,10 @@
 	{% if theRecommendedSongs == 'nonexistent' %}
 	<p>No recommendations</p>
 	{% else %}
-	{% for i, t in theRecommendedSongs.items %}
-	<p><a href="/song/{{i}}">{{t}}</a></p>
+	{% for t in theRecommendedSongs %}
+	<img src="{{t.image}}" width=100/>
+	<p><a href="/song/{{t.songId}}">{{t.title}}</a></p>
+	<p>Artists: {{t.artists}}</p>
 	{% endfor %}
 	{% endif %}
 	</body>

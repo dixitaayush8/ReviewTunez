@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>New Releases</title>
+</head>
+<body>
+	<p><a href="/">Home</a></p>
+	<h3>New Album Releases</h3>
+	{% for t in newAlbums %}
+	<img src="{{t.image}}" width=100/>
+	<p><a href="/album/{{t.albumId}}">{{t.title}}</a></p>
+	<p>Artists: {{t.artists}}</p>
+	{% endfor %}
+	</body>
+	
+</html>
