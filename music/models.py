@@ -57,12 +57,12 @@ class Artist(models.Model):
 
 class SongReview(models.Model):
 	songId = models.CharField(max_length=10, default='No song', null=True, blank=True)
-	#albumId = models.CharField(max_length=10, default='No album', null=True, blank=True)
+	albumId = models.CharField(max_length=10, default='No album', null=True, blank=True)
 	#artistId = models.CharField(max_length=10, default='No artist', null=True, blank=True)
 	user = models.ForeignKey(User)
 	comment = models.CharField(max_length = 500, default='No comment')
 	songTitle = models.CharField(max_length=100, default='No song title', null=True, blank=True)
-	#albumTitle = models.CharField(max_length=100, default='No album title', null=True, blank=True)
+	albumTitle = models.CharField(max_length=100, default='No album title', null=True, blank=True)
 	#artistTitle = models.CharField(max_length=100, default='No artist title', null=True, blank=True)
 	songArtists = models.CharField(max_length=10, default='No artists', null=True, blank=True)
 	rating = models.FloatField(max_length=2, default=1)

@@ -177,7 +177,7 @@ def song_page(request, song_id):
 		theRating = request.GET.get('number')
 		if 'reviewed' in request.GET:
 			showtime = strftime("%Y-%m-%d %H:%M:%S", localtime())
-			theReview = SongReview.objects.create(songId=song_id, image=theTrack['album']['images'][0]['url'],time=showtime, songTitle=theTrack['name'],songArtists=songArtists,user=theUser,comment=theComment,rating=theRating)
+			theReview = SongReview.objects.create(songId=song_id,albumId=theTrack['album']['id'],albumTitle=theTrack['album']['name'],image=theTrack['album']['images'][0]['url'],time=showtime, songTitle=theTrack['name'],songArtists=songArtists,user=theUser,comment=theComment,rating=theRating)
 			allReviews = SongReview.objects.filter(songId=song_id)
 			average = allReviews.aggregate(Avg('rating'))
 			return render_to_response('song.html',{'song_pg': song_pg, 'theUser': theUser, 'average': average, "allReviews": allReviews, 'album_pg': album_pg, 'artist_pg': artistData})

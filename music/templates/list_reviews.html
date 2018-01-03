@@ -12,6 +12,7 @@
 	{% for m in songReview_pg %}
 	<img src="{{m.image}}" width=100/>
 	<h3><a href="/song/{{m.songId}}">{{m.songTitle}}</a></h3>
+	<p>Album: <a href="/album/{{m.albumId}}">{{m.albumTitle}}</a></p>
 	<p>Artists: {{m.songArtists}}</p>
 	<p>Review: {{m.comment}}</p>
 	<p>Rating: {{m.rating}}/10.0</p>
