@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from time import gmtime, localtime, strftime
 import random
 from django.shortcuts import render, get_object_or_404, render_to_response, get_list_or_404
 from django.contrib.auth.models import User
-from .models import Song, Album, Artist, Review
+from .models import Song, Album, Artist, SongReview, AlbumReview, ArtistReview
 from django.db.models import Avg
 from django import forms
 from .forms import SearchForm, ReviewForm
@@ -124,7 +125,12 @@ def search(request):
 		return render(request, 'search.html')   
 
 def song_page(request, song_id):
+	theUser = request.user
+	allReviews = SongReview.objects.filter(songId=song_id)
+	average = allReviews.aggregate(Avg('rating'))
 	theTrack = sp.track(song_id)
+	songArtistLists = [x['name'] for x in theTrack['artists']]
+	songArtists = ", ".join(songArtistLists)
 	if Song.objects.filter(songId=song_id).exists():
 		song_pg = Song.objects.get(songId=song_id)
 	else:
@@ -154,21 +160,35 @@ def song_page(request, song_id):
 	else:
 		theAlbum = Album.objects.create(title=album['name'],theType=album['album_type'],popularity=float(album['popularity']),releaseDate=album['release_date'],query='nothin',image=album['images'][0]['url'],albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theArtists,artistId='no')
 		album_pg=Album.objects.get(albumId=albumId)
-	return render_to_response('song.html',{'song_pg': song_pg, 'album_pg': album_pg, 'artist_pg': artistData})
+	if not allReviews:
+		allReviews = 'nope'
+	if request.GET:
+		theComment = request.GET.get('review')
+		theRating = request.GET.get('number')
+		if 'reviewed' in request.GET:
+			showtime = strftime("%Y-%m-%d %H:%M:%S", localtime())
+			theReview = SongReview.objects.create(songId=song_id, time=showtime, songTitle=theTrack['name'],songArtists=songArtists,user=theUser,comment=theComment,rating=theRating)
+			allReviews = SongReview.objects.filter(songId=song_id)
+			average = allReviews.aggregate(Avg('rating'))
+			return render_to_response('song.html',{'song_pg': song_pg, 'theUser': theUser, 'average': average, "allReviews": allReviews, 'album_pg': album_pg, 'artist_pg': artistData})
+	else:
+		return render_to_response('song.html',{'song_pg': song_pg, 'theUser': theUser, 'average': average, "allReviews": allReviews, 'album_pg': album_pg, 'artist_pg': artistData})
 
 def album_page(request, album_id):
 	Song.objects.all().delete()
 	Artist.objects.all().delete()
+	theUser = request.user
+	allReviews = AlbumReview.objects.filter(albumId=album_id)
+	average = allReviews.aggregate(Avg('rating'))
+	album = sp.album(album_id)
+	somelist = [x['name'] for x in album['artists']]
+	theArtists = ', '.join(somelist)
 	if Album.objects.filter(albumId=album_id).exists():
 		album_pg=Album.objects.get(albumId=album_id)
 	else:
-		album = sp.album(album_id)
-		somelist = [x['name'] for x in album['artists']]
-		theArtists = ', '.join(somelist)
 		theAlbum = Album.objects.create(title=album['name'],theType=album['album_type'],popularity=float(album['popularity']),releaseDate=album['release_date'],query='nothin',image=album['images'][0]['url'],albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theArtists,artistId='no')
 		album_pg=Album.objects.get(albumId=album_id)
 	j = sp.album_tracks(album_id, limit=50, offset=0)
-	album = sp.album(album_id)
 	albumName = album['name']
 	for i in album['artists']:
 		y = sp.artist(i['id'])
@@ -194,15 +214,30 @@ def album_page(request, album_id):
 		else:
 			theSong = Song.objects.create(title=r['name'],theType=r['type'],albumId=album_id,query='nothin',album=albumName,songId=r['id'],preview=r['preview_url'],external=r['external_urls']['spotify'],uri=r['uri'],duration=convertMillis(r['duration_ms']),mainArtist=r['artists'][0]['name'],artists=theArtists,popularity=popularity,image=image,artistId=r['artists'][0]['id'])
 			musicData = Song.objects.filter(albumId=album_id)
-	return render_to_response('album.html',{'album_pg': album_pg, 'musicData': musicData, 'artist_pg': artistData})
+	if not allReviews:
+		allReviews = 'nope'
+	if request.GET:
+		theComment = request.GET.get('review')
+		theRating = request.GET.get('number')
+		if 'reviewed' in request.GET:
+			showtime = strftime("%Y-%m-%d %H:%M:%S", localtime())
+			theReview = AlbumReview.objects.create(albumId=album_id,time=showtime,albumTitle=album['name'],albumArtists=theArtists,user=theUser,comment=theComment,rating=theRating)
+			allReviews = AlbumReview.objects.filter(albumId=album_id)
+			average = allReviews.aggregate(Avg('rating'))
+			return render_to_response('album.html',{'album_pg': album_pg, 'theUser': theUser, 'average': average, 'allReviews': allReviews, 'musicData': musicData, 'artist_pg': artistData})
+	else:
+		return render_to_response('album.html',{'album_pg': album_pg, 'theUser': theUser, 'average': average, 'allReviews': allReviews, 'musicData': musicData, 'artist_pg': artistData})
 
 def artist_page(request, artist_id):
 	Song.objects.all().delete()
 	Album.objects.all().delete()
+	theUser = request.user
+	ta = sp.artist(artist_id)
+	allReviews = ArtistReview.objects.filter(artistId=artist_id)
+	average = allReviews.aggregate(Avg('rating'))
 	if Artist.objects.filter(artistId=artist_id).exists():
 		artist_pg = Artist.objects.get(artistId = artist_id)
 	else:
-		ta = sp.artist(artist_id)
 		genres = [x for x in ta['genres']]
 		theGenres = ', '.join(genres)
 		if not ta['images']:
@@ -237,5 +272,17 @@ def artist_page(request, artist_id):
 				theArtists = ', '.join(somelist)
 				theAlbum = Album.objects.create(title=album['name'],theType=album['album_type'],popularity=float(someAlbum['popularity']),releaseDate=someAlbum['release_date'],query='nothin',image=album['images'][0]['url'],albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theArtists,artistId=artist_id)
 				albumData = Album.objects.filter(artistId=artist_id)
-	return render_to_response('artist.html', {'artist_pg': artist_pg, 'songData': songData, 'albumData': albumData})
+	if not allReviews:
+		allReviews = 'nope'
+	if request.GET:
+		theComment = request.GET.get('review')
+		theRating = request.GET.get('number')
+		if 'reviewed' in request.GET:
+			showtime = strftime("%Y-%m-%d %H:%M:%S", localtime())
+			theReview = ArtistReview.objects.create(artistId=artist_id,user=theUser,comment=theComment,rating=theRating,artistName=ta['name'],time=showtime)
+			allReviews = ArtistReview.objects.filter(artistId=artist_id)
+			average = allReviews.aggregate(Avg('rating'))
+			return render_to_response('artist.html', {'artist_pg': artist_pg, 'average': average, 'theUser': theUser, 'allReviews': allReviews, 'songData': songData, 'albumData': albumData})
+	else:
+		return render_to_response('artist.html', {'artist_pg': artist_pg, 'average': average, 'theUser': theUser, 'allReviews': allReviews, 'songData': songData, 'albumData': albumData})
 	

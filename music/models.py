@@ -55,16 +55,33 @@ class Artist(models.Model):
 	#albums = models.CharField(max_length=1000, default="No albums") #access API docs to generate
 	#related artists, use API docs
 
-class Review(models.Model):
+class SongReview(models.Model):
 	songId = models.CharField(max_length=10, default='No song', null=True, blank=True)
-	albumId = models.CharField(max_length=10, default='No album', null=True, blank=True)
-	artistId = models.CharField(max_length=10, default='No artist', null=True, blank=True)
+	#albumId = models.CharField(max_length=10, default='No album', null=True, blank=True)
+	#artistId = models.CharField(max_length=10, default='No artist', null=True, blank=True)
 	user = models.ForeignKey(User)
 	comment = models.CharField(max_length = 500, default='No comment')
 	songTitle = models.CharField(max_length=100, default='No song title', null=True, blank=True)
-	albumTitle = models.CharField(max_length=100, default='No album title', null=True, blank=True)
-	artistTitle = models.CharField(max_length=100, default='No artist title', null=True, blank=True)
+	#albumTitle = models.CharField(max_length=100, default='No album title', null=True, blank=True)
+	#artistTitle = models.CharField(max_length=100, default='No artist title', null=True, blank=True)
 	songArtists = models.CharField(max_length=10, default='No artists', null=True, blank=True)
 	rating = models.FloatField(max_length=2, default=1)
+	time = models.CharField(max_length=15, default='No date')
 
+class AlbumReview(models.Model):
+	albumId = models.CharField(max_length=10, default='No album', null=True, blank=True)
+	albumTitle = models.CharField(max_length=100, default='No song title', null=True, blank=True)
+	user = models.ForeignKey(User)
+	comment = models.CharField(max_length = 500, default='No comment')
+	albumArtists = models.CharField(max_length=10,default='No artists',null=True,blank=True)
+	rating = models.FloatField(max_length = 2, default=1)
+	time = models.CharField(max_length=15, default='No date')
+
+class ArtistReview(models.Model):
+	artistId = models.CharField(max_length=10, default='No artist', null=True, blank=True)
+	user = models.ForeignKey(User)
+	comment = models.CharField(max_length = 500, default='No comment')
+	artistName = models.CharField(max_length=10,default='No artist',null=True,blank=True)
+	rating = models.FloatField(max_length = 2, default=1)
+	time = models.CharField(max_length=15, default='No date')
 # Create your models here.

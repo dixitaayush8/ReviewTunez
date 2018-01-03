@@ -27,9 +27,31 @@
 		<p>{{album_pg.popularity}}/100.0</p>
 		<!--<p>{{tracks|join:"<br/>"}}</p> -->
 		<p>In order to access the album on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> if you have not done so already.</p>
+		<iframe src="https://open.spotify.com/embed?uri=spotify:album:{{album_pg.albumId}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 		<p><a href="{{album_pg.external}}" target="_blank">Open on Spotify browser</a></p>
 		<p><a href="{{album_pg.uri}}" target="_blank">Open on Spotify</a></p>
-		<iframe src="https://open.spotify.com/embed?uri=spotify:album:{{album_pg.albumId}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
-
+		<h3>Current rating: </h3>
+		{% if average.rating__avg == 'None' %}
+							<p>No average ratings yet</p>
+							{% else %}
+							<p>{{average.rating__avg}}/10.0</p>
+							{% endif %}
+		<p>Write a review, {{theUser.username}}.</p>
+		<form name="some" method = "GET" action="/album/{{album_pg.albumId}}">
+		<input class="form-control" type="text" name="review" value="Type review here">
+		<input class="form-control" type="text" name="number" value="number between 0-10">
+		<input type="submit" value="submit" class="btn btn-primary" name = "reviewed">
+		<p></p>
+		</form>
+		<h4>Reviews: </h4>
+							{% if allReviews == 'nope' %}
+							<p>No reviews yet.</p>
+							{% else %}
+							{% for g in allReviews %}
+							<p>{{g.time}} (UTC)</p>
+							<p>{{g.user}}: {{g.comment}}</p>
+							<p>Rating: {{g.rating}}</p>
+							{% endfor %}
+							{% endif %}
 	</body>
 </html>
