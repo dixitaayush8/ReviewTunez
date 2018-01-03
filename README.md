@@ -9,3 +9,5 @@ Functional Requirements planned:
 Completed:
 1. User can search for a song by title or popularity index and access info, preview, and stream the song.
 2. User can search for an album and access info, preview, and stream the album.
+3. User can search for an artist and access the artist's info, listen to the artist's top songs, and view all of the artist's albums.
+4. User can rate and enter a custom review for an album, song, or artist. 
