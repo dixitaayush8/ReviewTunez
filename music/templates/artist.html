@@ -18,6 +18,12 @@
 		{% endif %}
 		<h3>Popularity: </h3>
 		<p>{{artist_pg.popularity}}/100.0</p>
+		{% if albumData != 'nothin' %}
+		<h3>Albums: </h3>
+		{% for r in albumData %}
+		<p><a href="/album/{{r.albumId}}">{{r.title}}</a></p>
+		{% endfor %}
+		{% endif %}
 		{% if songData != 'nothin' %}
 		<h3>Top songs: </h3>
 		{% for m in songData %}

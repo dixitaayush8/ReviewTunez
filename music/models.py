@@ -35,6 +35,7 @@ class Album(models.Model):
 	releaseDate = models.CharField(max_length=20, default='No release date', null=True, blank=True)
 	popularity = models.FloatField(max_length=101, default=0)
 	theType = models.CharField(max_length = 10, default='No type')
+	artistId = models.CharField(max_length=100, default='None')
 	#access API docs to get list of tracks
 
 class Artist(models.Model):
