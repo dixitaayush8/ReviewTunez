@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+	<style>
+	input.btn{
+		background-color:#66cc00;
+	}
+</style>
+		
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+		<blockquote class="blockquote text-center">
+			<div class="p-3 mb-2 bg-success text-white"> <h4 class="display-4">Search for Music</h4> </div>
+		</blockquote>
 	<title>Search</title>
 
 </head>
 <body>
-	<p><a href="/">Home</a></p>
+	<div class="container-fluid">
+				<div class="row justify-content-start">
+					<div class = "col-4">
+						<p><a class = "text-success" href="/"> <h4> Back to Home </h4></a></p>
+					</div>
+				</div>
+			</div>
+	<nav class="navbar navbar-light bg-faded">
 	<form name="some" method = "GET" action="/search">
 		<p>Enter a song, album, or artist to search for below: </p>
 		<input class="form-control" type="text" name="q" value="{{ request.GET.q }}">
@@ -16,22 +36,70 @@
 	<p></p>
 	{% if 'r' in request.GET or 'j' in request.GET %}
 	<input class = "btn btn-primary" type="submit" value="Sort by Popularity" name="j">
+	{% elif 'p' in request.GET or 'yo' in request.GET %}
+	<input class = "btn btn-primary" type="submit" value="Sort by Popularity" name="yo">
+	{% elif 'n' in request.GET or 'b' in request.GET %}
+	<input class = "btn btn-primary" type="submit" value="Sort by Popularity" name="b">
 	{% endif %}
 	</form>
+</nav>
+{% if musicData == "there is an error" %}
+			<h3>No results to display for "{{request.GET.q}}"</h3>
+{% else %}
 	{% for m in musicData %}
 	{% if 'r' in request.GET or 'j' in request.GET %}
-	<img src="{{m.image}}" width=100/>
+	<div class="container-fluid">
+				<div class="media">
+					<div class="media-left">
+						<a href="#">
+	<img src="{{m.image}}" class="rounded" width=100/>
+	<p></p>
+						</a>
+					</div>
+					<div class="media-body">
+						<div class="col col-md-auto">
 	<h3><a href="/song/{{m.songId}}" name = "clicked">{{m.title}}</a></h3>
 	<p>{{m.artists}}</p>
-	{% elif 'p' in request.GET %}
-	<img src="{{m.image}}" width=100/>
+	</div>
+					</div>
+				</div>
+			</div>
+	{% elif 'p' in request.GET or 'yo' in request.GET %}
+	<div class="container-fluid">
+				<div class="media">
+					<div class="media-left">
+						<a href="#">
+	<img src="{{m.image}}" class="rounded" width=100/>
+	<p></p>
+						</a>
+					</div>
+					<div class="media-body">
+						<div class="col col-md-auto"> 
 	<h3><a href="/album/{{m.albumId}}" name = "clicked">{{m.title}}</a></h3>
 	<p>{{m.artists}}</p>
-	{% elif 'n' in request.GET %}
-	<img src="{{m.image}}" width=100/>
+	</div>
+					</div>
+				</div>
+			</div>
+	{% elif 'n' in request.GET  or 'b' in request.GET %}
+	<div class="container-fluid">
+				<div class="media">
+					<div class="media-left">
+						<a href="#">
+	<img src="{{m.image}}" class="rounded" width=100/>
+	<p></p>
+						</a>
+					</div>
+					<div class="media-body">
+						<div class="col col-md-auto"> 
 	<h3><a href="/artist/{{m.artistId}}" name = "clicked">{{m.name}}</a></h3>
+	</div>
+					</div>
+				</div>
+			</div>
 	{% endif %}
 	{% endfor %}
+	{% endif %}
 	{% endif %}
 </body>
 </html>

@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <blockquote class="blockquote text-center">
+        <div class="p-3 mb-2 bg-success text-white"> <h4 class="display-4">New Albums</h4> </div>
+    </blockquote>
 	<title>New Releases</title>
 </head>
 <body>
-	<p><a href="/">Home</a></p>
-	<h3>New Album Releases</h3>
+	<div class="container-fluid">
+				<div class="row justify-content-start">
+					<div class = "col-4">
+						<p><a class = "text-success" href="/"> <h4> Back to Home </h4></a></p>
+					</div>
+				</div>
+			</div>
+	<h2 class="text-center">New Album Releases</h2>
 	{% for t in newAlbums %}
-	<img src="{{t.image}}" width=100/>
-	<p><a href="/album/{{t.albumId}}">{{t.title}}</a></p>
-	<p>Artists: {{t.artists}}</p>
+	<div class="container-fluid">
+				<div class="media">
+	<div class="media-left">
+						<a href="#">
+							<img src="{{t.image}}" class="rounded" width=100>
+							<p></p>
+						</a>
+					</div>
+					<div class="media-body">
+<div class="col col-md-auto">
+	<h5 class= "media-heading"><a href="/album/{{t.albumId}}">{{t.title}}</a></h5>
+	<p class="text-info">Artists: {{t.artists}}</p>
+</div></div></div></div>
+
 	{% endfor %}
 	</body>
 	

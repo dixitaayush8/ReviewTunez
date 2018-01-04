@@ -1,37 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{song_pg.title}}</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
 	<style>
-			img {
-				max-width:100%;
-			}
-		</style>
+img {
+	max-width:100%;
+}
+h5 {
+	color:#4d9900;
+}
+</style>
+	<title>{{song_pg.title}}</title>
 	</head>
 	<body>
-		<p><a href="/search/">New Search</a></p>
+		<div class="container-fluid">
+				<div class="row justify-content-start">
+					<div class = "col-4">
+						<p><a class = "text-info" href="/search/"> <p> New Search </p></a></p>
+					</div>
+				</div>
+			</div>
+		<div class="container-fluid">
+				<div class="media">
+					<div class="media-left">
+						<a href="#">
 		<img src="{{song_pg.image}}" width = 300/>
-		<h2>{{song_pg.title}}</h2>
-		<p>{{song_pg.theType}}</p>
-		<h3>Artists: </h3>
+		<p></p>
+						</a>
+					</div>
+		<div class="media-body">
+						<div class="col col-md-auto">
+		<h2 class="media-heading">{{song_pg.title}}</h2>
+		<p>Type: {{song_pg.theType}}</p>
+		<h5>Artists: </h5>
 		{% for g in artist_pg %}
 		<p><a href="/artist/{{g.artistId}}">{{g.name}}</a></p>
 		{% endfor %}
-		<h3>Album: </h3>
+		<h5>Album: </h5>
 		<p><a href="/album/{{album_pg.albumId}}">{{album_pg.title}}</a></p>
-		<h3>Popularity Score: </h3>
+		<h5>Popularity Score: </h5>
 		<p>{{song_pg.popularity}}/100.0</p>
 		{% if song_pg.preview %}
-		<h3>Preview: </h3>
+		<h5>Preview: </h5>
 		<audio controls>
 			<source src="{{song_pg.preview}}.mp3" type="audio/mp3" autoplay="False">
 		</audio>
 		{% endif %}
-		<p>In order to access the song on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> if you have not done so already.</p>
+		<p>In order to access the song on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> or <a href="https://accounts.spotify.com/en-US/login?continue=https:%2F%2Fwww.spotify.com%2Fus%2Faccount%2Foverview%2F" target="_blank">log in to your Spotify</a> if you have not done so already.</p>
 		<iframe src="https://open.spotify.com/embed?uri=spotify:track:{{song_pg.songId}}" frameborder="0" allowtransparency="true"></iframe>
 		<p><a href="{{song_pg.external}}" target="_blank">Open on Spotify browser</a></p>
 		<p><a href="{{song_pg.uri}}" target="_blank">Open on Spotify</a></p>
-		<h3>Current rating: </h3>
+		<h5>Current rating: </h5>
 		{% if average.rating__avg == 'None' %}
 							<p>No average ratings yet</p>
 							{% else %}
@@ -44,7 +66,7 @@
 		<input type="submit" value="submit" class="btn btn-primary" name = "reviewed">
 		<p></p>
 		</form>
-		<h4>Reviews: </h4>
+		<h5>Reviews: </h5>
 							{% if allReviews == 'nope' %}
 							<p>No reviews yet.</p>
 							{% else %}
@@ -56,5 +78,10 @@
 							{% endif %}
 
 <p><a href="/list_reviews/">My Reviews</a></p>
+</div>
+					</div>
+
+				</div>
+			</div>
 	</body>
 </html>

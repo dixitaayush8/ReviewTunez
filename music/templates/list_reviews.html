@@ -1,44 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>My Reviews</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <blockquote class="blockquote text-center">
+        <div class="p-3 mb-2 bg-success text-white"> <h4 class="display-4">My Reviews</h4> </div>
+    </blockquote>
+    <title>My Reviews</title>
 </head>
 <body>
-	<p><a href="/">Home</a></p>
-	<h2>Song Reviews</h2>
+	<div class="container-fluid">
+				<div class="row justify-content-start">
+					<div class = "col-4">
+						<p><a class = "text-success" href="/"> <h4> Back to Home </h4></a></p>
+					</div>
+				</div>
+			</div>
+	<h2 class="text-center">Song Reviews</h2>
 	{% if songReview_pg == 'nope' %}
-	<p>No song reviews yet.</p>
+	<p class="text-center">No song reviews yet.</p>
 	{% else %}
 	{% for m in songReview_pg %}
-	<img src="{{m.image}}" width=100/>
-	<h3><a href="/song/{{m.songId}}">{{m.songTitle}}</a></h3>
-	<p>Album: <a href="/album/{{m.albumId}}">{{m.albumTitle}}</a></p>
-	<p>Artists: {{m.songArtists}}</p>
-	<p>Review: {{m.comment}}</p>
-	<p>Rating: {{m.rating}}/10.0</p>
+	<div class="container-fluid">
+				<div class="media">
+	<div class="media-left">
+						<a href="#">
+							<img src="{{m.image}}" class="rounded" width=200>
+							<p></p>
+						</a>
+					</div>
+<div class="media-body">
+<div class="col col-md-auto">
+	<h5 class= "media-heading"><a href="/song/{{m.songId}}">{{m.songTitle}}</a></h5>
+	<p class="text-info">Album: <a href="/album/{{m.albumId}}">{{m.albumTitle}}</a>
+	<p class="text-info">Artists: {{m.songArtists}}</p>
+	<p class="text-info">Review: {{m.comment}}</p>
+	<p class="text-info">Rating: {{m.rating}}/10.0</p>
+</div></div></div></div>
 	{% endfor %}
 	{% endif %}
-	<h2>Album Reviews</h2>
+	<h2 class="text-center">Album Reviews</h2>
 	{% if albumReview_pg == 'nope' %}
-	<p>No album reviews yet.</p>
+	<p class="text-center">No album reviews yet.</p>
 	{% else %}
 	{% for a in albumReview_pg %}
+	<div class="container-fluid">
+				<div class="media">
+	<div class="media-left">
+						<a href="#">
 	<img src="{{a.image}}" width=100/>
-	<h3><a href="/album/{{a.albumId}}">{{a.albumTitle}}</a></h3>
-	<p>Artists: {{a.albumArtists}}</p>
-	<p>Review: {{a.comment}}</p>
-	<p>Rating: {{a.rating}}/10.0</p>
+	<p></p>
+						</a>
+					</div>
+	<div class="media-body">
+<div class="col col-md-auto">
+	<h5 class="media-heading"><a href="/album/{{a.albumId}}">{{a.albumTitle}}</a></h5>
+	<p class="text-info">Artists: {{a.albumArtists}}</p>
+	<p class="text-info">Review: {{a.comment}}</p>
+	<p class="text-info">Rating: {{a.rating}}/10.0</p>
+</div></div></div></div>
 	{% endfor %}
 	{% endif %}
-	<h2>Artist Reviews</h2>
+	<h2 class="text-center">Artist Reviews</h2>
 	{% if artistReview_pg == 'nope' %}
-	<p>No artist reviews yet.</p>
+	<p class="text-center">No artist reviews yet.</p>
 	{% else %}
 	{% for al in artistReview_pg %}
-	<img src="{{al.image}}" width=100/>
-	<h3><a href="/artist/{{al.artistId}}">{{al.artistName}}</a></h3>
-	<p>Review: {{al.comment}}</p>
-	<p>Rating: {{al.rating}}/10.0</p>
+	<div class="container-fluid">
+				<div class="media">
+	<div class="media-left">
+						<a href="#">
+	<img src="{{al.image}}" width=200/>
+	<p></p>
+						</a>
+					</div>
+					<div class="media-body">
+<div class="col col-md-auto">
+	<h5 class="text-info"><a href="/artist/{{al.artistId}}">{{al.artistName}}</a></h5>
+	<p class="text-info">Review: {{al.comment}}</p>
+	<p class="text-info">Rating: {{al.rating}}/10.0</p>
+</div></div></div></div>
 	{% endfor %}
 	{% endif %}
 	</body>

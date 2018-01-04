@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+	<style>
+	button.btn{
+		background-color:#66cc00;
+	}
+</style>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <blockquote class="blockquote text-center">
+        <div class="p-3 mb-2 bg-success text-white"> <h1 class="display-3">Make an Account</h1> </div>
+    </blockquote>
+    <title>Register</title>
 </head>
 <body>
+	<p class="text-center">Streaming features on this site will require you to either <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> or <a href="https://accounts.spotify.com/en-US/login?continue=https:%2F%2Fwww.spotify.com%2Fus%2Faccount%2Foverview%2F" target="_blank"> log in</a> to your Spotify account, but you can get by fine on this site if you choose not to.</p>
     <form method="POST">
+    	<div class = "container">
+    		<div class = "row">
+    			<div class = "col">
+    			</div>
+    			<div class = "col">
         {% csrf_token %} {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <button class= "btn btn-primary" type="submit">Submit</button>
+        </div>
+    			<div class = "col">
+    			</div>
+    		</div>
+    	</div> 
     </form>
 </body>
 </html>

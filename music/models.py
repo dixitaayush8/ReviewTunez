@@ -21,7 +21,6 @@ class Song(models.Model):
 	theType = models.CharField(max_length = 10, default='No type')
 	albumId = models.CharField(max_length=100, default='None')
 	artistId = models.CharField(max_length=100, default='None')
-	#recommendations, use API docs
 
 class Album(models.Model):
 	title = models.CharField(max_length=100, default='No album title')
@@ -36,7 +35,6 @@ class Album(models.Model):
 	popularity = models.FloatField(max_length=101, default=0)
 	theType = models.CharField(max_length = 10, default='No type')
 	artistId = models.CharField(max_length=100, default='None')
-	#access API docs to get list of tracks
 
 class Artist(models.Model):
 	genres = models.CharField(max_length=100, default='No genres')
@@ -50,20 +48,14 @@ class Artist(models.Model):
 	numOfFollowers = models.CharField(max_length=20,default="0")
 	songId = models.CharField(max_length=30, default="None", null=True, blank=True)
 	albumId = models.CharField(max_length = 30, default="None", null=True, blank=True)
-	#tracks = models.ManyToManyField(Song)
-	#topTenTracks = models.CharField(max_length=1000, default="No top tracks") #access API docs to generate
-	#albums = models.CharField(max_length=1000, default="No albums") #access API docs to generate
-	#related artists, use API docs
 
 class SongReview(models.Model):
 	songId = models.CharField(max_length=10, default='No song', null=True, blank=True)
 	albumId = models.CharField(max_length=10, default='No album', null=True, blank=True)
-	#artistId = models.CharField(max_length=10, default='No artist', null=True, blank=True)
 	user = models.ForeignKey(User)
 	comment = models.CharField(max_length = 500, default='No comment')
 	songTitle = models.CharField(max_length=100, default='No song title', null=True, blank=True)
 	albumTitle = models.CharField(max_length=100, default='No album title', null=True, blank=True)
-	#artistTitle = models.CharField(max_length=100, default='No artist title', null=True, blank=True)
 	songArtists = models.CharField(max_length=10, default='No artists', null=True, blank=True)
 	rating = models.FloatField(max_length=2, default=1)
 	time = models.CharField(max_length=15, default='No date')
@@ -87,4 +79,4 @@ class ArtistReview(models.Model):
 	rating = models.FloatField(max_length = 2, default=1)
 	time = models.CharField(max_length=15, default='No date')
 	image = models.CharField(max_length=100, default='No image')
-# Create your models here.
+

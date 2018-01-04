@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <blockquote class="blockquote text-center">
+        <div class="p-3 mb-2 bg-success text-white"> <h4 class="display-4">Song Recommendations</h4> </div>
+    </blockquote>
 	<title>Song Recommendations</title>
 </head>
 <body>
-	<p><a href="/">Home</a></p>
-	<h3>Song Recommendations</h3>
+	<div class="container-fluid">
+				<div class="row justify-content-start">
+					<div class = "col-4">
+						<p><a class = "text-success" href="/"> <h4> Back to Home </h4></a></p>
+					</div>
+				</div>
+			</div>
+	<h2 class="text-center">Song Recommendations</h2>
 	{% if theRecommendedSongs == 'nonexistent' %}
-	<p>No recommendations</p>
+	<p class="text-center">No recommendations. Rate a good song first!</p>
 	{% else %}
+	<p class="text-center">(If you rate a song or multiple songs above a 6, recommendations for you will show up here.)</p>
 	{% for t in theRecommendedSongs %}
+	<div class="container-fluid">
+				<div class="media">
+	<div class="media-left">
+						<a href="#">
 	<img src="{{t.image}}" width=100/>
+	<p></p>
+						</a>
+					</div>
+					<div class="media-body">
+<div class="col col-md-auto">
 	<p><a href="/song/{{t.songId}}">{{t.title}}</a></p>
-	<p>Artists: {{t.artists}}</p>
+	<p class="text-info">Artists: {{t.artists}}</p>
+	</div></div></div></div>
 	{% endfor %}
 	{% endif %}
 	</body>

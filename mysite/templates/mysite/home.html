@@ -2,19 +2,26 @@
 <html>
 <head>
     <title>Home</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <blockquote class="blockquote text-center">
+        <div class="p-3 mb-2 bg-success text-white"> <h1 class="display-3">ReviewTunez</h1> </div>
+    </blockquote>
 </head>
 <body>
     {% if user.is_authenticated %}
-    <p>hello</p>
-    <p>welcome {{ user.username }}</p>
-    <p><a href="/logout">Logout</a></p>
-    <p><a href="/search">Search for Music</a></p>
-    <p><a href="/list_reviews">My Reviews</a></p>
-    <p><a href="/recommendations">Song Recommendations</a></p>
-    <p><a href="/new_releases">New Album Releases</a></p>
+    <p class="text-center">Hello, {{ user.username }}. Welcome to ReviewTunez!</p>
+    <p class="text-center"><a href="/logout">Logout</a></p>
+    <p class="text-center"><a href="/search">Search for Music</a></p>
+    <p class="text-center"><a href="/list_reviews">My Reviews</a></p>
+    <p class="text-center"><a href="/recommendations">Song Recommendations</a></p>
+    <p class="text-center"><a href="/new_releases">New Album Releases</a></p>
     {% else %}
-    <p><a href="/login">Login</a></p>
-    <p><a href="/register">Register</a></p>
+    <p class="text-center">Hello, please log in or register to use this website.</p>
+    <p class="text-center"><a href="/login">Login</a></p>
+    <p class="text-center"><a href="/register">Register</a></p>
     {% endif %}
 </body>
 </html>
