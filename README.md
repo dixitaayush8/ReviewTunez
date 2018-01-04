@@ -8,13 +8,19 @@ Functional requirements completed:
 5. User can access suggested songs for them based on what they reviewed. 
 
 Screenshots:
+
+Homepage:
 <img width="1280" alt="homepage" src="https://user-images.githubusercontent.com/15604792/34556244-78028f18-f0ea-11e7-983a-99b109cd3403.png">
 
-<img width="1280" alt="reviewlist" src="https://user-images.githubusercontent.com/15604792/34556279-90e03c42-f0ea-11e7-99a3-943009f6c00a.png">
+Searching for an album:
+<img width="1280" alt="search" src="https://user-images.githubusercontent.com/15604792/34556392-ea8daefa-f0ea-11e7-8cee-fba7acced919.png">
 
+Reviewing an album:
 <img width="1280" alt="reviewing" src="https://user-images.githubusercontent.com/15604792/34556300-9f929cb2-f0ea-11e7-8afa-c1e40a1aa290.png">
 
-<img width="1280" alt="newalbums" src="https://user-images.githubusercontent.com/15604792/34556385-e3ec4d90-f0ea-11e7-9ef7-417d4e4e0e50.png">
+Seeing all your reviews:
+<img width="1280" alt="reviewlist" src="https://user-images.githubusercontent.com/15604792/34556279-90e03c42-f0ea-11e7-99a3-943009f6c00a.png">
 
-<img width="1280" alt="search" src="https://user-images.githubusercontent.com/15604792/34556392-ea8daefa-f0ea-11e7-8cee-fba7acced919.png">
+Seeing any new albums that released recently:
+<img width="1280" alt="newalbums" src="https://user-images.githubusercontent.com/15604792/34556385-e3ec4d90-f0ea-11e7-9ef7-417d4e4e0e50.png">
 
