@@ -12,7 +12,11 @@ img {
 h5 {
 	color:#4d9900;
 }
+input.btn{
+		background-color:#66cc00;
+	}
 </style>
+
 	<title>{{song_pg.title}}</title>
 	</head>
 	<body>
@@ -71,7 +75,7 @@ h5 {
 							<p>No reviews yet.</p>
 							{% else %}
 							{% for g in allReviews %}
-							<p>{{g.time}} (UTC)</p>
+							<p>{{g.time}} (PST)</p>
 							<p>{{g.user}}: {{g.comment}}</p>
 							<p>Rating: {{g.rating}}/10.0</p>
 							{% endfor %}

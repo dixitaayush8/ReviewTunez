@@ -12,6 +12,9 @@
 			h5 {
 				color:#4d9900;
 			}
+			input.btn{
+		background-color:#66cc00;
+	}
 		</style>
 	</head>
 	<body>
@@ -54,6 +57,8 @@
 		<iframe src="https://open.spotify.com/embed?uri={{artist_pg.uri}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 		{% endif %}
 		<p>In order to access this artist on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> or <a href="https://accounts.spotify.com/en-US/login?continue=https:%2F%2Fwww.spotify.com%2Fus%2Faccount%2Foverview%2F" target="_blank">log in to your Spotify</a> if you have not done so already.</p>
+		<p><a href="{{artist_pg.external}}" target="_blank">Open on Spotify browser</a></p>
+		<p><a href="{{artist_pg.uri}}" target="_blank">Open on Spotify</a></p>
 		<h5>Current rating: </h5>
 		{% if average.rating__avg == 'None' %}
 							<p>No average ratings yet</p>
@@ -72,7 +77,7 @@
 							<p>No reviews yet.</p>
 							{% else %}
 							{% for g in allReviews %}
-							<p>{{g.time}} (UTC)</p>
+							<p>{{g.time}} (PST)</p>
 							<p>{{g.user}}: {{g.comment}}</p>
 							<p>Rating: {{g.rating}}/10.0</p>
 							{% endfor %}
