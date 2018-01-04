@@ -15,6 +15,9 @@ Homepage:
 Searching for an album:
 <kbd><img width="1280" alt="search" src="https://user-images.githubusercontent.com/15604792/34556392-ea8daefa-f0ea-11e7-8cee-fba7acced919.png"></kbd>
 
+Selecting a song:
+<kbd><img width="1280" alt="musicinfo" src="https://user-images.githubusercontent.com/15604792/34557166-2bb8fa6c-f0ee-11e7-8e7c-209440eda866.png"></kbd>
+
 Reviewing an album:
 <kbd><img width="1280" alt="reviewing" src="https://user-images.githubusercontent.com/15604792/34556300-9f929cb2-f0ea-11e7-8afa-c1e40a1aa290.png"></kbd>
 
