@@ -18,11 +18,11 @@ Searching for an album:
 Selecting a song:
 <kbd><img width="1280" alt="musicinfo" src="https://user-images.githubusercontent.com/15604792/34557166-2bb8fa6c-f0ee-11e7-8e7c-209440eda866.png"></kbd>
 
+Seeing all your reviews:
+<kbd><img width="1280" alt="reviewlist" src="https://user-images.githubusercontent.com/15604792/34558319-78f7d740-f0f2-11e7-893c-bc2bf95a3361.png"></kbd>
+
 Reviewing an album:
 <kbd><img width="1280" alt="reviewing" src="https://user-images.githubusercontent.com/15604792/34556300-9f929cb2-f0ea-11e7-8afa-c1e40a1aa290.png"></kbd>
-
-Seeing all your reviews:
-<kbd><img width="1280" alt="reviewlist" src="https://user-images.githubusercontent.com/15604792/34556279-90e03c42-f0ea-11e7-99a3-943009f6c00a.png"></kbd>
 
 Seeing any new albums that released recently:
 <kbd><img width="1280" alt="newalbums" src="https://user-images.githubusercontent.com/15604792/34556385-e3ec4d90-f0ea-11e7-9ef7-417d4e4e0e50.png"></kbd>

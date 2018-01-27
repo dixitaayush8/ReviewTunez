@@ -270,11 +270,11 @@ def album_page(request, album_id):
 	average = allReviews.aggregate(Avg('rating'))
 	album = sp.album(album_id)
 	somelist = [x['name'] for x in album['artists']]
-	theArtists = ', '.join(somelist)
+	theAlbumArtists = ', '.join(somelist)
 	if Album.objects.filter(albumId=album_id).exists():
 		album_pg=Album.objects.get(albumId=album_id)
 	else:
-		theAlbum = Album.objects.create(title=album['name'],theType=album['album_type'],popularity=float(album['popularity']),releaseDate=album['release_date'],query='nothin',image=album['images'][0]['url'],albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theArtists,artistId='no')
+		theAlbum = Album.objects.create(title=album['name'],theType=album['album_type'],popularity=float(album['popularity']),releaseDate=album['release_date'],query='nothin',image=album['images'][0]['url'],albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theAlbumArtists,artistId='no')
 		album_pg=Album.objects.get(albumId=album_id)
 	j = sp.album_tracks(album_id, limit=50, offset=0)
 	albumName = album['name']
@@ -309,7 +309,7 @@ def album_page(request, album_id):
 		theRating = request.GET.get('number')
 		if 'reviewed' in request.GET:
 			showtime = strftime("%Y-%m-%d %H:%M:%S", localtime())
-			theReview = AlbumReview.objects.create(albumId=album_id,image=album['images'][0]['url'],time=showtime,albumTitle=album['name'],albumArtists=theArtists,user=theUser,comment=theComment,rating=theRating)
+			theReview = AlbumReview.objects.create(albumId=album_id,image=album['images'][0]['url'],time=showtime,albumTitle=album['name'],albumArtists=theAlbumArtists,user=theUser,comment=theComment,rating=theRating)
 			allReviews = AlbumReview.objects.filter(albumId=album_id)
 			average = allReviews.aggregate(Avg('rating'))
 			return render_to_response('album.html',{'album_pg': album_pg, 'theUser': theUser, 'average': average, 'allReviews': allReviews, 'musicData': musicData, 'artist_pg': artistData})
