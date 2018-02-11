@@ -1,5 +1,7 @@
 A web application that uses the Python [Spotipy API client](https://github.com/plamere/spotipy) with the Spotify Web API to allow users to search for music by artists, songs, or albums and review them.
 
+URL for this project: https://enigmatic-crag-83915.herokuapp.com/ 
+
 Functional requirements completed:
 1. User can search for a song by title or popularity index and access info, preview, and stream the song.
 2. User can search for an album by title or popularity index and access info, preview, and stream the album.
