@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+	<style>
+	input.btn{
+		background-color:#66cc00;
+	}
+</style>
+		
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+		<blockquote class="blockquote text-center">
+			<div class="p-3 mb-2 bg-success text-white"> <h4 class="display-4">Search for a Music Video</h4> </div>
+		</blockquote>
+	<title>Search Video</title>
+
+</head>
+<body>
+	<div class="container-fluid">
+				<div class="row justify-content-start">
+					<div class = "col-4">
+						<p><a class = "text-success" href="/"> <h4> Back to Home </h4></a></p>
+					</div>
+				</div>
+			</div>
+	<nav class="navbar navbar-light bg-faded">
+	<form name="some" method = "GET" action="/searchvideo">
+		<p>Enter a song (along with its artist) to search for below: </p>
+		<input class="form-control" type="text" name="q" value="{{ request.GET.q }}">
+		<input type="submit" value="Music Video" class="btn btn-primary" name = "r">
+		{% if searchVid == True %}
+		<p></p>
+		</form>
+</nav>
+{% if vidData == 'there is an error' %}
+<h3>No video results to display for "{{request.GET.q}}"</h3>
+{% else %}
+<div class="container-fluid" align = 'center'>
+				<div class="media">
+					<div class="media-body">
+						<a href="#">
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/{{vidData}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+							<p></p>
+							<p></p>
+							<p></p>
+						</a></div></div></div>
+						{% endif %}
+						{% endif %}
+					</body></html>
+
+
+
+
+
+
+
+
+

@@ -21,6 +21,13 @@
 		<div class="container-fluid">
 				<div class="row justify-content-start">
 					<div class = "col-4">
+						<p><a class = "text-success" href="/"> <h4> Home </h4></a></p>
+					</div>
+				</div>
+			</div>
+		<div class="container-fluid">
+				<div class="row justify-content-start">
+					<div class = "col-4">
 						<p><a class = "text-info" href="/search/"> <p> New Search </p></a></p>
 					</div>
 				</div>
@@ -43,12 +50,12 @@
 		{% endfor %}
 		<h5>Release Date: </h5>
 		<p>{{album_pg.releaseDate}}</p>
-		<h5>Tracks: </h5>
-		{% for m in musicData %}
-		<p><a href="/song/{{m.songId}}">{{m.title}}</a></p>
-		{% endfor %}
 		<h5>Popularity: </h5>
 		<p>{{album_pg.popularity}}/100.0</p>
+		<h5>Tracks: </h5>
+		{% for m in musicData %}
+		<p>{{ forloop.counter }}. {# starting index 1 #} <a href="/song/{{m.songId}}">{{m.title}}</a></p>
+		{% endfor %}
 		<!--<p>{{tracks|join:"<br/>"}}</p> -->
 		<p>In order to access the album on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> or <a href="https://accounts.spotify.com/en-US/login?continue=https:%2F%2Fwww.spotify.com%2Fus%2Faccount%2Foverview%2F" target="_blank">log in to your Spotify</a> if you have not done so already.</p>
 		<iframe src="https://open.spotify.com/embed?uri=spotify:album:{{album_pg.albumId}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
@@ -60,6 +67,7 @@
 							{% else %}
 							<p>{{average.rating__avg}}/10.0</p>
 							{% endif %}
+							{% if theUser.is_authenticated %}
 		<p>Write a review, {{theUser.username}}.</p>
 		<form name="some" method = "GET" action="/album/{{album_pg.albumId}}">
 		<input class="form-control" type="text" name="review" value="Type review here">
@@ -67,6 +75,9 @@
 		<input type="submit" value="submit" class="btn btn-primary" name = "reviewed">
 		<p></p>
 		</form>
+		{% else %}
+		<p>To write a review, <a href="/register/">register</a> or <a href="/login/">login</a>.</p>
+		{% endif %}
 		<h5>Reviews: </h5>
 							{% if allReviews == 'nope' %}
 							<p>No reviews yet.</p>
@@ -77,7 +88,9 @@
 							<p>Rating: {{g.rating}}/10.0</p>
 							{% endfor %}
 							{% endif %}
-							<p><a href="/list_reviews/">My Reviews</a></p>
+							{% if theUser.is_authenticated %}
+<p><a href="/list_reviews/">My Reviews</a></p>
+{% endif %}
 							</div>
 					</div>
 

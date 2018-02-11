@@ -44,7 +44,20 @@
 	</form>
 </nav>
 {% if musicData == "there is an error" %}
-			<h3>No results to display for "{{request.GET.q}}"</h3>
+{% if 'r' in request.GET or 'j' in request.GET %}
+<h3>No song results to display for "{{request.GET.q}}"</h3>
+
+{% elif 'p' in request.GET or 'yo' in request.GET %}
+<h3>No album results to display for "{{request.GET.q}}"</h3>
+{% elif 'n' in request.GET or 'b' in request.GET %}
+<h3>No artist results to display for "{{request.GET.q}}"</h3>
+{% endif %}
+{% elif musicData == "there is a song error" %}
+			<h3>No song results to display for "{{request.GET.q}}"</h3>
+{% elif musicData == "there is a album error" %}
+		<h3>No album results to display for "{{request.GET.q}}"</h3>
+{% elif musicData == "there is a artist error" %}
+<h3>No artist results to display for "{{request.GET.q}}"</h3>
 {% else %}
 	{% for m in musicData %}
 	{% if 'r' in request.GET or 'j' in request.GET %}

@@ -21,6 +21,13 @@
 		<div class="container-fluid">
 				<div class="row justify-content-start">
 					<div class = "col-4">
+						<p><a class = "text-success" href="/"> <h4> Home </h4></a></p>
+					</div>
+				</div>
+			</div>
+		<div class="container-fluid">
+				<div class="row justify-content-start">
+					<div class = "col-4">
 						<p><a class = "text-info" href="/search/"> <p> New Search </p></a></p>
 					</div>
 				</div>
@@ -46,13 +53,28 @@
 		<h5>Albums: </h5>
 		<p>(If there are duplicate titles of an album, one is an explicit version and the other is a clean version.)</p>
 		{% for r in albumData %}
+		<div class="container-fluid">
+				<div class="media">
+					<div class="media-center">
+						<a href="#">
+		<img src="{{r.image}}" class="rounded" width=100/>
+		<p></p>
+						</a>
+					</div>
+					<div class="media-body">
+						<div class="col col-md-auto">
 		<p><a href="/album/{{r.albumId}}">{{r.title}}</a></p>
+		</div>
+					</div>
+				</div>
+			</div>
 		{% endfor %}
 		{% endif %}
 		{% if songData != 'nothin' %}
+		<p></p>
 		<h5>Top songs: </h5>
 		{% for m in songData %}
-		<p><a href="/song/{{m.songId}}">{{m.title}}</a></p>
+		<p>{{ forloop.counter }}. {# starting index 1 #} <a href="/song/{{m.songId}}">{{m.title}}</a></p>
 		{% endfor %}
 		<iframe src="https://open.spotify.com/embed?uri={{artist_pg.uri}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 		{% endif %}
@@ -65,6 +87,7 @@
 							{% else %}
 							<p>{{average.rating__avg}}/10.0</p>
 							{% endif %}
+							{% if theUser.is_authenticated %}
 		<p>Write a review, {{theUser.username}}.</p>
 		<form name="some" method = "GET" action="/artist/{{artist_pg.artistId}}">
 		<input class="form-control" type="text" name="review" value="Type review here">
@@ -72,6 +95,9 @@
 		<input type="submit" value="submit" class="btn btn-primary" name = "reviewed">
 		<p></p>
 		</form>
+		{% else %}
+		<p>To write a review, <a href="/register/">register</a> or <a href="/login/">login</a>.</p>
+		{% endif %}
 		<h5>Reviews: </h5>
 							{% if allReviews == 'nope' %}
 							<p>No reviews yet.</p>
@@ -82,7 +108,9 @@
 							<p>Rating: {{g.rating}}/10.0</p>
 							{% endfor %}
 							{% endif %}
-							<p><a href="/list_reviews/">My Reviews</a></p>
+							{% if theUser.is_authenticated %}
+<p><a href="/list_reviews/">My Reviews</a></p>
+{% endif %}
 							</div>
 					</div>
 

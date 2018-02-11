@@ -23,6 +23,13 @@ input.btn{
 		<div class="container-fluid">
 				<div class="row justify-content-start">
 					<div class = "col-4">
+						<p><a class = "text-success" href="/"> <h4> Home </h4></a></p>
+					</div>
+				</div>
+			</div>
+		<div class="container-fluid">
+				<div class="row justify-content-start">
+					<div class = "col-4">
 						<p><a class = "text-info" href="/search/"> <p> New Search </p></a></p>
 					</div>
 				</div>
@@ -45,6 +52,8 @@ input.btn{
 		{% endfor %}
 		<h5>Album: </h5>
 		<p><a href="/album/{{album_pg.albumId}}">{{album_pg.title}}</a></p>
+		<h5>Release Date: </h5>
+		<p>{{album_pg.releaseDate}}</p>
 		<h5>Popularity Score: </h5>
 		<p>{{song_pg.popularity}}/100.0</p>
 		{% if song_pg.preview %}
@@ -54,15 +63,17 @@ input.btn{
 		</audio>
 		{% endif %}
 		<p>In order to access the song on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> or <a href="https://accounts.spotify.com/en-US/login?continue=https:%2F%2Fwww.spotify.com%2Fus%2Faccount%2Foverview%2F" target="_blank">log in to your Spotify</a> if you have not done so already.</p>
-		<iframe src="https://open.spotify.com/embed?uri=spotify:track:{{song_pg.songId}}" frameborder="0" allowtransparency="true"></iframe>
+		<iframe src="https://open.spotify.com/embed?uri=spotify:track:{{song_pg.songId}}" frameborder="0" width="300" height="100" allowtransparency="true"></iframe>
 		<p><a href="{{song_pg.external}}" target="_blank">Open on Spotify browser</a></p>
 		<p><a href="{{song_pg.uri}}" target="_blank">Open on Spotify</a></p>
+		<p><a href="/searchvideo/?q={{youtubeParsed}}&r=Music+Video">Music Video</a></p>
 		<h5>Current rating: </h5>
 		{% if average.rating__avg == 'None' %}
 							<p>No average ratings yet</p>
 							{% else %}
 							<p>{{average.rating__avg}}/10.0</p>
 							{% endif %}
+							{% if theUser.is_authenticated %}
 		<p>Write a review, {{theUser.username}}.</p>
 		<form name="some" method = "GET" action="/song/{{song_pg.songId}}">
 		<input class="form-control" type="text" name="review" value="Type review here">
@@ -70,6 +81,9 @@ input.btn{
 		<input type="submit" value="submit" class="btn btn-primary" name = "reviewed">
 		<p></p>
 		</form>
+		{% else %}
+		<p>To write a review, <a href="/register/">register</a> or <a href="/login/">login</a>.</p>
+		{% endif %}
 		<h5>Reviews: </h5>
 							{% if allReviews == 'nope' %}
 							<p>No reviews yet.</p>
@@ -80,8 +94,9 @@ input.btn{
 							<p>Rating: {{g.rating}}/10.0</p>
 							{% endfor %}
 							{% endif %}
-
+{% if theUser.is_authenticated %}
 <p><a href="/list_reviews/">My Reviews</a></p>
+{% endif %}
 </div>
 					</div>
 
