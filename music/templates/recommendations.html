@@ -18,9 +18,9 @@
 			</div>
 	<h2 class="text-center">Song Recommendations</h2>
 	{% if theRecommendedSongs == 'nonexistent' %}
-	<p class="text-center">No recommendations. Rate a good song first!</p>
+	<p class="text-center">No recommendations yet. Rate a good song first! (If you rate at least one song above a 6, recommendations for you will show up here.)</p>
 	{% else %}
-	<p class="text-center">(If you rate a song or multiple songs above a 6, recommendations for you will show up here.)</p>
+	<p class="text-center">(If you rate at least one song above a 6, recommendations for you will show up here.)</p>
 	{% for t in theRecommendedSongs %}
 	<div class="container-fluid">
 				<div class="media">

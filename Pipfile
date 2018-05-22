@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+certifi = "==2017.11.5"
+chardet = "==3.0.4"
+dj-database-url = "==0.4.2"
+django = "==1.11"
+gunicorn = "==19.7.1"
+idna = "==2.6"
+"psycopg2" = "==2.7.3.2"
+pytz = "==2017.3"
+requests = "==2.18.4"
+spotipy = "==2.4.4"
+"urllib3" = "==1.22"
+whitenoise = "==3.3.1"
+"beautifulsoup4" = "==4.6.0"
+google-api-python-client = "==1.6.5"
+"httplib2" = "==0.10.3"
+"oauth2client" = "==4.1.2"
+"pyasn1" = "==0.4.2"
+"pyasn1-modules" = "==0.2.1"
+rsa = "==3.4.2"
+six = "==1.11.0"
+uritemplate = "==3.0.0"
+
+[dev-packages]

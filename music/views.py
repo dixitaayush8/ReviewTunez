@@ -12,6 +12,9 @@ from apiclient.discovery import build
 import unicodedata
 import spotipy
 import spotipy.oauth2 as oauth2
+from bs4 import BeautifulSoup
+import requests
+import urllib
 
 credentials = oauth2.SpotifyClientCredentials(
 		client_id='SECRET',
@@ -121,7 +124,9 @@ def search(request):
 					theArtists = ', '.join(somelist)
 					thatList = [str(x) for x in t['available_markets']]
 					theMarkets = ', '.join(thatList)
-					theAlbum = Album.objects.create(title=theTitle,theType=theType,popularity=popularity,releaseDate=releaseDate,query=searchname,image=theImage,albumId=theId,external=theExternal,uri=theURI,mainArtist=theMainArtist,artists=theArtists,artistId='no')
+					stringDate = unicodedata.normalize('NFKD', releaseDate).encode('ascii','ignore')
+					theYear = stringDate[:4]
+					theAlbum = Album.objects.create(year=theYear,title=theTitle,theType=theType,popularity=popularity,releaseDate=releaseDate,query=searchname,image=theImage,albumId=theId,external=theExternal,uri=theURI,mainArtist=theMainArtist,artists=theArtists,artistId='no')
 					musicData = Album.objects.filter(query=searchname)
 			except:
 				musicData = "there is a album error"
@@ -150,7 +155,9 @@ def search(request):
 					theArtists = ', '.join(somelist)
 					thatList = [str(x) for x in t['available_markets']]
 					theMarkets = ', '.join(thatList)
-					theAlbum = Album.objects.create(title=theTitle,theType=theType,popularity=popularity,releaseDate=releaseDate,query=searchname,image=theImage,albumId=theId,external=theExternal,uri=theURI,mainArtist=theMainArtist,artists=theArtists,artistId='no')
+					stringDate = unicodedata.normalize('NFKD', releaseDate).encode('ascii','ignore')
+					theYear = stringDate[:4]
+					theAlbum = Album.objects.create(year=theYear,title=theTitle,theType=theType,popularity=popularity,releaseDate=releaseDate,query=searchname,image=theImage,albumId=theId,external=theExternal,uri=theURI,mainArtist=theMainArtist,artists=theArtists,artistId='no')
 					musicData = Album.objects.filter(query=searchname).order_by('-popularity')
 			except:
 				musicData = "there is a album error"
@@ -213,8 +220,15 @@ def song_page(request, song_id):
 	theTrack = sp.track(song_id)
 	songArtistLists = [x['name'] for x in theTrack['artists']]
 	songArtists = ", ".join(songArtistLists)
-	youtubeSearchString = theTrack['artists'][0]['name'] + " " + theTrack['name']
+	youtubeSearch = theTrack['artists'][0]['name'] + " " + theTrack['name']
+	youtubeSearchString = youtubeSearch.encode('ascii','ignore')
+	if "&" in youtubeSearchString:
+		youtubeSearchString = youtubeSearchString.replace("&","%26")
+	if "- From" in youtubeSearchString:
+		index = youtubeSearchString.find("- From")
+		youtubeSearchString = youtubeSearchString[:index]
 	youtubeParsed = "+".join(youtubeSearchString.split())
+	youtubeParsed = youtubeParsed.encode('ascii','ignore')
 	if Song.objects.filter(songId=song_id).exists():
 		song_pg = Song.objects.get(songId=song_id)
 	else:
@@ -223,6 +237,8 @@ def song_page(request, song_id):
 	Artist.objects.all().delete()
 	track = sp.track(song_id)
 	album = sp.album(track['album']['id'])
+	stringDate = unicodedata.normalize('NFKD', album['release_date']).encode('ascii','ignore')
+	theYear = stringDate[:4]
 	albumId= album['id']
 	for r in track['artists']:
 		l = sp.artist(r['id'])
@@ -242,7 +258,7 @@ def song_page(request, song_id):
 	if Album.objects.filter(albumId=albumId).exists():
 		album_pg=Album.objects.get(albumId=albumId)
 	else:
-		theAlbum = Album.objects.create(title=album['name'],theType=album['album_type'],popularity=float(album['popularity']),releaseDate=album['release_date'],query='nothin',image=album['images'][0]['url'],albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theArtists,artistId='no')
+		theAlbum = Album.objects.create(year=theYear,title=album['name'],theType=album['album_type'],popularity=float(album['popularity']),releaseDate=album['release_date'],query='nothin',image=album['images'][0]['url'],albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theArtists,artistId='no')
 		album_pg=Album.objects.get(albumId=albumId)
 	if not allReviews:
 		allReviews = 'nope'
@@ -267,12 +283,14 @@ def album_page(request, album_id):
 	allReviews = AlbumReview.objects.filter(albumId=album_id)
 	average = allReviews.aggregate(Avg('rating'))
 	album = sp.album(album_id)
+	stringDate = unicodedata.normalize('NFKD', album['release_date']).encode('ascii','ignore')
+	theYear = stringDate[:4]
 	somelist = [x['name'] for x in album['artists']]
 	theAlbumArtists = ', '.join(somelist)
 	if Album.objects.filter(albumId=album_id).exists():
 		album_pg=Album.objects.get(albumId=album_id)
 	else:
-		theAlbum = Album.objects.create(title=album['name'],theType=album['album_type'],popularity=float(album['popularity']),releaseDate=album['release_date'],query='nothin',image=album['images'][0]['url'],albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theAlbumArtists,artistId='no')
+		theAlbum = Album.objects.create(year=theYear,title=album['name'],theType=album['album_type'],popularity=float(album['popularity']),releaseDate=album['release_date'],query='nothin',image=album['images'][0]['url'],albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theAlbumArtists,artistId='no')
 		album_pg=Album.objects.get(albumId=album_id)
 	j = sp.album_tracks(album_id, limit=50, offset=0)
 	albumName = album['name']
@@ -363,13 +381,15 @@ def artist_page(request, artist_id):
 				someAlbum = sp.album(album['id'])
 				somelist = [x['name'] for x in album['artists']]
 				theArtists = ', '.join(somelist)
+				stringDate = unicodedata.normalize('NFKD', someAlbum['release_date']).encode('ascii','ignore')
+				theYear = stringDate[:4]
 				if not album['images']:
 					theImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
 				else:
 					theImage = album['images'][0]['url']
 				#print album['name']
 				#print theArtists
-				theAlbum = Album.objects.create(title=album['name'],theType=album['album_type'],popularity=float(someAlbum['popularity']),releaseDate=someAlbum['release_date'],query='nothin',image=theImage,albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theArtists,artistId=artist_id)
+				theAlbum = Album.objects.create(year=theYear,title=album['name'],theType=album['album_type'],popularity=float(someAlbum['popularity']),releaseDate=someAlbum['release_date'],query='nothin',image=theImage,albumId=album['id'],external=album['external_urls']['spotify'],uri=album['uri'],mainArtist=album['artists'][0]['name'],artists=theArtists,artistId=artist_id)
 				albumData = Album.objects.filter(artistId=artist_id)
 	if not allReviews:
 		allReviews = 'nope'
@@ -443,11 +463,13 @@ def new_releases(request):
 		theAlbum = sp.album(i['id'])
 		albumArtistList = [x['name'] for x in theAlbum['artists']]
 		albumArtists = ", ".join(albumArtistList)
+		stringDate = unicodedata.normalize('NFKD', theAlbum['release_date']).encode('ascii','ignore')
+		theYear = stringDate[:4]
 		if not theAlbum['images']:
 			theImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
 		else:
 			theImage = theAlbum['images'][0]['url']
-		theAlbum = Album.objects.create(title=theAlbum['name'],theType=theAlbum['album_type'],popularity=float(theAlbum['popularity']),releaseDate=theAlbum['release_date'],query='reca',image=theAlbum['images'][0]['url'],albumId=theAlbum['id'],external=theAlbum['external_urls']['spotify'],uri=theAlbum['uri'],mainArtist=theAlbum['artists'][0]['name'],artists=albumArtists,artistId='nah')
+		theAlbum = Album.objects.create(year=theYear,title=theAlbum['name'],theType=theAlbum['album_type'],popularity=float(theAlbum['popularity']),releaseDate=theAlbum['release_date'],query='reca',image=theAlbum['images'][0]['url'],albumId=theAlbum['id'],external=theAlbum['external_urls']['spotify'],uri=theAlbum['uri'],mainArtist=theAlbum['artists'][0]['name'],artists=albumArtists,artistId='nah')
 		newAlbums = Album.objects.filter(query='reca')
 	return render_to_response('new_releases.html',{'newAlbums': newAlbums})
 
@@ -462,6 +484,38 @@ def search_video(request):
  			return render(request, 'searchvideo.html',{'vidData': k, 'searchVid': True})
  	else:
  		return render(request, 'searchvideo.html')
+
+def search_lyrics(request):
+	k = 'there is an error'
+	if request.GET:
+		lyricSearch = request.GET.get('q')
+		if 'r' in request.GET:
+			#try:
+				lyricSearch = lyricSearch.encode('ascii','ignore')
+				lyricSearch += ' song lyrics genius'
+				name =  urllib.quote_plus(lyricSearch)
+				url = 'http://www.google.com/search?q='+name
+				result = requests.get(url).text
+				link_start=result.find('genius.com')
+				link_end=result.find('&',link_start)
+				if link_start == -1 or link_end == -1:
+					k = 'there is an error'
+				else:
+					link = 'https://' + result[link_start:link_end]
+					lyrics_html = requests.get(link).text
+					soup = BeautifulSoup(lyrics_html, "html.parser")
+					[h.extract() for h in soup("script")]
+					lyrics = soup.find("div", class_="lyrics").get_text()
+					r = lyrics.encode('ascii','ignore')
+					if not r:
+						k = 'there is an error'
+					else:
+						k = r.split('\n')
+			#except:
+				#k = 'there is an error'
+				return render(request, 'searchlyrics.html',{'lyricData': k, 'searchLyrics': True})
+	else:
+		return render(request,'searchlyrics.html')
 
  	
 # def getVideo(song_name):

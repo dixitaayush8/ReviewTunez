@@ -62,11 +62,14 @@ input.btn{
 			<source src="{{song_pg.preview}}.mp3" type="audio/mp3" autoplay="False">
 		</audio>
 		{% endif %}
+		<h5>Streaming: </h5>
 		<p>In order to access the song on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> or <a href="https://accounts.spotify.com/en-US/login?continue=https:%2F%2Fwww.spotify.com%2Fus%2Faccount%2Foverview%2F" target="_blank">log in to your Spotify</a> if you have not done so already.</p>
-		<iframe src="https://open.spotify.com/embed?uri=spotify:track:{{song_pg.songId}}" frameborder="0" width="300" height="100" allowtransparency="true"></iframe>
+		<iframe src="https://open.spotify.com/embed/track/{{song_pg.songId}}" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+		<!--<iframe src="https://open.spotify.com/embed?uri=spotify:track:{{song_pg.songId}}" frameborder="0" width="300" height="100" allowtransparency="true"></iframe>-->
 		<p><a href="{{song_pg.external}}" target="_blank">Open on Spotify browser</a></p>
 		<p><a href="{{song_pg.uri}}" target="_blank">Open on Spotify</a></p>
-		<p><a href="/searchvideo/?q={{youtubeParsed}}&r=Music+Video">Music Video</a></p>
+		<p><a href="/searchvideo/?q={{youtubeParsed}}&r=Music+Video" target="_blank">Music Video</a> (links to the ReviewTunez YouTube player)</p>
+		<p><a href="/searchlyrics/?q={{youtubeParsed}}&r=Lyrics" target="_blank">Lyrics</a></p>
 		<h5>Current rating: </h5>
 		{% if average.rating__avg == 'None' %}
 							<p>No average ratings yet</p>

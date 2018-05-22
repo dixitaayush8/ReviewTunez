@@ -63,7 +63,7 @@
 					</div>
 					<div class="media-body">
 						<div class="col col-md-auto">
-		<p><a href="/album/{{r.albumId}}">{{r.title}}</a></p>
+		<p><a href="/album/{{r.albumId}}">{{r.title}}</a> ({{r.year}})</p>
 		</div>
 					</div>
 				</div>
@@ -76,6 +76,7 @@
 		{% for m in songData %}
 		<p>{{ forloop.counter }}. {# starting index 1 #} <a href="/song/{{m.songId}}">{{m.title}}</a></p>
 		{% endfor %}
+		<h5>Streaming: </h5>
 		<iframe src="https://open.spotify.com/embed?uri={{artist_pg.uri}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 		{% endif %}
 		<p>In order to access this artist on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> or <a href="https://accounts.spotify.com/en-US/login?continue=https:%2F%2Fwww.spotify.com%2Fus%2Faccount%2Foverview%2F" target="_blank">log in to your Spotify</a> if you have not done so already.</p>

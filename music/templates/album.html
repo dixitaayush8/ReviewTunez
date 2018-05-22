@@ -56,6 +56,7 @@
 		{% for m in musicData %}
 		<p>{{ forloop.counter }}. {# starting index 1 #} <a href="/song/{{m.songId}}">{{m.title}}</a></p>
 		{% endfor %}
+		<h5>Streaming: </h5>
 		<!--<p>{{tracks|join:"<br/>"}}</p> -->
 		<p>In order to access the album on Spotify, <a href="https://www.spotify.com/us/signup/" target="_blank">create a Spotify account</a> or <a href="https://accounts.spotify.com/en-US/login?continue=https:%2F%2Fwww.spotify.com%2Fus%2Faccount%2Foverview%2F" target="_blank">log in to your Spotify</a> if you have not done so already.</p>
 		<iframe src="https://open.spotify.com/embed?uri=spotify:album:{{album_pg.albumId}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
