@@ -32,6 +32,3 @@ Seeing all your reviews:
 Reviewing an album:
 <kbd><img width="1280" alt="reviewing" src="https://user-images.githubusercontent.com/15604792/34556300-9f929cb2-f0ea-11e7-8afa-c1e40a1aa290.png"></kbd>
 
-Seeing any new albums that released recently:
-<kbd><img width="1280" alt="newalbums" src="https://user-images.githubusercontent.com/15604792/34556385-e3ec4d90-f0ea-11e7-9ef7-417d4e4e0e50.png"></kbd>
-
