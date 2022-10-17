@@ -34,3 +34,8 @@ Reviewing an album:
 
 Searching and viewing a music video:
 <img width="1447" alt="Screen Shot 2022-10-16 at 8 15 57 PM" src="https://user-images.githubusercontent.com/15604792/196081802-3c6034a4-9f84-4b01-bb53-ab2cda1a80bb.png">
+
+Song recommendations:
+<img width="1662" alt="Screen Shot 2022-10-16 at 8 54 44 PM" src="https://user-images.githubusercontent.com/15604792/196085970-2533c7a6-a836-41ac-a70f-e4cb62247c0d.png">
+
+
