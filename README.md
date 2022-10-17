@@ -32,3 +32,5 @@ Seeing all your reviews:
 Reviewing an album:
 <kbd><img width="1280" alt="reviewing" src="https://user-images.githubusercontent.com/15604792/34556300-9f929cb2-f0ea-11e7-8afa-c1e40a1aa290.png"></kbd>
 
+Searching and viewing a music video:
+<img width="1447" alt="Screen Shot 2022-10-16 at 8 15 57 PM" src="https://user-images.githubusercontent.com/15604792/196081802-3c6034a4-9f84-4b01-bb53-ab2cda1a80bb.png">
